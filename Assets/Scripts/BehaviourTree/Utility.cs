@@ -13,7 +13,6 @@ using System;
             randomDir += transform.position;
             if (NavMesh.SamplePosition(randomDir, out NavMeshHit hit, radius, 1))
             {
-				
                 pointOnNavMesh = hit.position;
             }
 

@@ -7,15 +7,23 @@ public class Plant : MonoBehaviour
     public Slider slider;
     public GameObject prefab;
 
+	[SerializeField]
     private float reproductionRate = 5f; // Seconds to reprodcue
-    private float reprodcutionAmount = 3; // Number of plants created
-    private float reproductionRange = 10f; 
+	[SerializeField]
+	private float reprodcutionAmount = 3; // Number of plants created
+	[SerializeField]
+	private float reproductionRange = 10f;
+	[SerializeField]
+	private float timeToDie = 10f;
 
-    private float reproductionTimer = 0f; 
+    private float reproductionTimer = 0f;
+	private float age = 0;
+
 
     void Update()
     {
         reproductionTimer += Time.deltaTime;
+		age += Time.deltaTime;
         slider.value = reproductionTimer / reproductionRate;
         if(reproductionTimer > reproductionRate)
         {
@@ -30,6 +38,12 @@ public class Plant : MonoBehaviour
             }
             reproductionTimer = 0f;
         }
+
+		if(age >= timeToDie)
+		{
+			Destroy(this);
+		}
+
     }
 
 
