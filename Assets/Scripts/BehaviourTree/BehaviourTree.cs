@@ -9,7 +9,6 @@ namespace BehaviourTree {
 
         protected void Start()
         {
-            Debug.Log("Tree has been set up");
             _root = SetupTree();
         }
 

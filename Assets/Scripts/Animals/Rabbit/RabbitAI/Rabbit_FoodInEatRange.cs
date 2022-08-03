@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
-public class Rabbit_TargetInEatRange : Node
+public class Rabbit_FoodInEatRange : Node
 {
     private Transform _transform;
 
-    public Rabbit_TargetInEatRange(Transform transform)
+    public Rabbit_FoodInEatRange(Transform transform)
     {
         _transform = transform;
     }
 
     public override NodeState Evaluate()
     {
-        Transform target = (Transform)GetData("target");
+        Transform target = (Transform)GetData("Food");
         if (target == null)
         {
             state = NodeState.FAILURE;

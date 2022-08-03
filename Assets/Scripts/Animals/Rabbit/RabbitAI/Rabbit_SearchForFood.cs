@@ -8,6 +8,7 @@ public class Rabbit_SearchForFood : Node
     private Transform _transform;
     private LayerMask _foodLayerMask = LayerMask.GetMask("Plant");
 
+
     public Rabbit_SearchForFood(Transform transform)
     {
         _transform = transform;
@@ -20,7 +21,7 @@ public class Rabbit_SearchForFood : Node
 			state = NodeState.FAILURE;
 			return state;
 		}
-        object target = GetData("target");
+        object target = GetData("Food");
 
         if (target == null)
         {
@@ -31,8 +32,8 @@ public class Rabbit_SearchForFood : Node
 
             if(collider.Length > 0)
             {
-                Debug.Log("Food found, target is "+ collider[0].transform.name);
-                parent.parent.SetData("target", collider[0].transform);
+                Debug.Log("Food found");
+                parent.parent.SetData("Food", collider[0].transform);
                 state = NodeState.SUCCESS;
                 return state;
             }

@@ -14,7 +14,7 @@ public class Rabbit_TaskEat : Node
 
     public override NodeState Evaluate()
     {
-        Transform target = (Transform)GetData("target");
+        Transform target = (Transform)GetData("Food");
 
         if (target == null)
         {
@@ -31,6 +31,10 @@ public class Rabbit_TaskEat : Node
 				float amount = Mathf.Min(RabbitBT.rabbit.hunger, Time.deltaTime * 1 / RabbitBT.rabbit.timeToEat);
 				RabbitBT.rabbit.hunger -= amount;
 			}
+			else
+			{
+				RabbitBT.rabbit.hunger = 0;
+			}
 
 			timeCounter += Time.deltaTime;
 			if (timeCounter > RabbitBT.rabbit.timeToEat)
@@ -40,7 +44,7 @@ public class Rabbit_TaskEat : Node
 				timeCounter = 0f;
 				state = NodeState.SUCCESS;
 				RabbitBT.rabbit.action = Animal.Action.NONE;
-				ClearData("target");
+				ClearData("Food");
 				return state;
 			}
 		}

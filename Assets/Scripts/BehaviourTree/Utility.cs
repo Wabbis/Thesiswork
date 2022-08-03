@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using Pathfinding;
 
     public class Utility
     { 
@@ -29,7 +30,20 @@ using System;
                 Math.Sin(2.0 * Math.PI * u2);
             double randNormal = mean + stdDev * randStdNormal;
             return randStdNormal;
-            
-             
+
         }
+
+	public static Vector3 FindRandomNodeOnAstarGrid(Transform transform, float radius)
+	{
+		Vector3 randomPoint = Vector3.zero;
+		GraphNode randomNode;
+		Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+		randomDirection += transform.position;
+		randomNode = AstarPath.active.GetNearest(randomDirection).node;
+		if(randomNode.Walkable)
+		{
+			randomPoint = randomNode.RandomPointOnSurface();
+		}
+		return randomPoint;
+	}
     }
