@@ -9,6 +9,7 @@ public class RabbitBT : BehaviourTree.BehaviourTree
 {
     public static Rabbit rabbit;
 	public static AIPath ai;
+	public Node activeNode = null;
 
     public void Awake()
     {
@@ -17,25 +18,59 @@ public class RabbitBT : BehaviourTree.BehaviourTree
      }
     protected override Node SetupTree()
     {
-        Node root = new Selector(new List<Node>
-        {
-            new Sequence(new List<Node>
-            {
-                new Rabbit_FoodInEatRange(transform),
-                new Rabbit_TaskEat(transform)
-            }),
-            
-            new Sequence(new List<Node>
-            {
-                new Rabbit_SearchForFood(transform),
-                new Rabbit_TaskMoveToFood(transform),
-            }),
+		Node root = new Selector(new List<Node>
+		{
+		   new Selector(new List<Node>
+		   {
+			   new Selector(new List<Node>
+			   {
+				   new Sequence(new List<Node>
+				   {
+					   new Rabbit_WaterInRange(transform),
+					   new Rabbit_TaskDrink(transform)
+				   }),
 
-            new Rabbit_RandomMove(transform, rabbit.searchRadius)
-        }) ;
+				   new Sequence(new List<Node>
+				   {
+					   new Rabbit_SearchForWater(transform),
+					   new Rabbit_TaskMoveToWater(transform)
+				   })
+			   }),
+
+			   new Selector(new List<Node>
+			   {
+				   new Sequence(new List<Node>
+				   {
+					   new Rabbit_FoodInEatRange(transform),
+					   new Rabbit_TaskEat(transform)
+				   }),
+
+				   new Sequence(new List<Node>
+				   {
+					   new Rabbit_SearchForFood(transform),
+					   new Rabbit_TaskMoveToFood(transform)
+				   })
+			   })
+
+		   }),
+		   new Selector(new List<Node>
+		   {
+			   new Sequence(new List<Node>
+			   {
+				   new Rabbit_MateInRange(transform),
+				   new Rabbit_TaskMate(transform)
+			   }),
+
+			   new Sequence(new List<Node>
+			   {
+				   new Rabbit_SearchMate(transform),
+				   new Rabbit_TaskMoveToMate(transform)
+			   })
+		   }),
+		   new Rabbit_RandomMove(transform, rabbit.searchRadius)
+		}) ;
          
         UnityEngine.Debug.Log("Rabbit Behaviour Tree has been set up");
-
         return root;
     }
 

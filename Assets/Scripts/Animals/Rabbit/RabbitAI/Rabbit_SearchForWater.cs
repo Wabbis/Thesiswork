@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
+using Pathfinding;
 public class Rabbit_SearchForWater : Node
 {
 	private Transform _transform;
+	private AIPath ai;
 	private LayerMask _waterLayerMask = LayerMask.GetMask("Water");
-	private List<Transform> memory;
-
-	public Rabbit_SearchForWater(Transform transform)
+	private List<Transform> memory = new List<Transform>();
+public Rabbit_SearchForWater(Transform transform)
 	{
 		_transform = transform;
+		ai = transform.GetComponent<AIPath>();
 	}
 
 	public override NodeState Evaluate()
@@ -56,6 +58,7 @@ public class Rabbit_SearchForWater : Node
 			if(collider.Length > 0)
 			{
 				Debug.Log("Water found");
+
 				parent.parent.SetData("Water", collider[0].transform);
 				if (!memory.Contains(collider[0].transform))
 				{

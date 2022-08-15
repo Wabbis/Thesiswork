@@ -11,7 +11,6 @@ public class Rabbit_TaskMoveToMate : Node
 	public Rabbit_TaskMoveToMate(Transform transform)
 	{
 		_transform = transform;
-		yOffset = transform.GetComponent<MeshCollider>().bounds.center.y; 
 	}
 
 	public override NodeState Evaluate()

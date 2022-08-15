@@ -33,6 +33,7 @@ public class Animal : MonoBehaviour
 	public float pregnancyDuration = 10f;
 
 	// Eat and drink settings:
+	public float drinkRange;
     public float eatRange;
     public float timeToEat; 
     public float timeToDrink;

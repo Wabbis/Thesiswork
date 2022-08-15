@@ -23,8 +23,8 @@ public class Rabbit : Animal
 	private List<Rabbit> rejections;
 
 
-
-	public bool PotentialMate(Rabbit mate) // Male only
+	// Male only
+	public bool PotentialMate(Rabbit mate) 
 	{
 		bool accepted = mate.RequestMate(this);
 		if (accepted)

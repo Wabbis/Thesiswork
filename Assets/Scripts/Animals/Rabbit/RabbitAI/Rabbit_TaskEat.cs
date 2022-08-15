@@ -28,7 +28,9 @@ public class Rabbit_TaskEat : Node
 
 			if (RabbitBT.rabbit.hunger > 0)
 			{
-				float amount = Mathf.Min(RabbitBT.rabbit.hunger, Time.deltaTime * 1 / RabbitBT.rabbit.timeToEat);
+				float amount = Mathf.Min(RabbitBT.rabbit.hunger, 
+					Time.deltaTime * 1 / RabbitBT.rabbit.timeToEat
+					);
 				RabbitBT.rabbit.hunger -= amount;
 			}
 			else
