@@ -13,7 +13,7 @@ public class Rabbit_RandomMove : Node
     private float _waitCounter = 0f;
     private bool _waiting = false;
     private float _searchRadius;
-	private static AIPath ai;
+	private AIPath ai;
 
     public Rabbit_RandomMove(Transform transform, float searchRadius)
     {
@@ -38,13 +38,13 @@ public class Rabbit_RandomMove : Node
 		}
 		else
 		{
+			
 			if (ai.reachedDestination)
 			{
 				_waitCounter = 0f;
 				_waiting = true;
 				_destination = Utility.FindRandomNodeOnAstarGrid(_transform, _searchRadius);
-				ai.destination = _destination;
-				
+				ai.destination = _destination;	
 			}
 
 		}

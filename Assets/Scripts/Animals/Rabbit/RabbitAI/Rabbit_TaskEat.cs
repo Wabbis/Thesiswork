@@ -6,11 +6,13 @@ public class Rabbit_TaskEat : Node
 {
     private Transform _transform;
     private float timeCounter = 0f;
+	private Rabbit rabbit;
     
     public Rabbit_TaskEat(Transform transform)
     {
         _transform = transform;
-    }
+		rabbit = _transform.GetComponent<Rabbit>();
+	}
 
     public override NodeState Evaluate()
     {
@@ -22,30 +24,30 @@ public class Rabbit_TaskEat : Node
             return state;
         }
 
-		if (RabbitBT.rabbit.action != Animal.Action.MATING) 
+		if (rabbit.action != Animal.Action.MATING) 
 		{
-			RabbitBT.rabbit.action = Animal.Action.EATING;
+			rabbit.action = Animal.Action.EATING;
 
-			if (RabbitBT.rabbit.hunger > 0)
+			if (rabbit.hunger > 0)
 			{
-				float amount = Mathf.Min(RabbitBT.rabbit.hunger, 
-					Time.deltaTime * 1 / RabbitBT.rabbit.timeToEat
+				float amount = Mathf.Min(rabbit.hunger, 
+					Time.deltaTime * 1 / rabbit.timeToEat
 					);
-				RabbitBT.rabbit.hunger -= amount;
+				rabbit.hunger -= amount;
 			}
 			else
 			{
-				RabbitBT.rabbit.hunger = 0;
+				rabbit.hunger = 0;
 			}
 
 			timeCounter += Time.deltaTime;
-			if (timeCounter > RabbitBT.rabbit.timeToEat)
+			if (timeCounter > rabbit.timeToEat)
 			{
 				Debug.Log("Plant eaten");
 				Object.Destroy(target.gameObject);
 				timeCounter = 0f;
 				state = NodeState.SUCCESS;
-				RabbitBT.rabbit.action = Animal.Action.NONE;
+				rabbit.action = Animal.Action.NONE;
 				ClearData("Food");
 				return state;
 			}

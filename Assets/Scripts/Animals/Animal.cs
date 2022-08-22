@@ -17,29 +17,28 @@ public class Animal : MonoBehaviour
 
 	protected bool dead = false;
 	public Action action = Action.NONE;
-    
-    public Color maleColor;
-    public Color femaleColor;
-	
-
-
-	// Sexual traits:
-
-		// Male only
-	public float Desirability = 100f; // Values from 0.1 to 100 male only, 0 for female
-
-		// Female only
-	public bool isPregnant = false;
-	public float pregnancyDuration = 10f;
 
 	// Eat and drink settings:
+	[Header("Eat and Drink")]
 	public float drinkRange;
     public float eatRange;
     public float timeToEat; 
     public float timeToDrink;
-	public float timeToReproduce;
 
-    // General settings:
+	// Reproduction Settings	
+	[Header("Reproduction")]
+	public float timeToMate;
+	public float reproductiveUrge; 
+	// Female only
+	public bool isPregnant = false;
+	public float pregnancyDuration = 10f;
+
+	// Male only
+	public float Desirability = 100f; // Values from 0.1 to 100 male only, 0 for female
+
+	// General settings:
+	[Header("General")]
+	public float energy;
     public float speed;
     public float size;
     public float searchRadius;
@@ -54,15 +53,18 @@ public class Animal : MonoBehaviour
     public float hunger;
     public float thirst;
 
-    public void Update()
+
+	public void Update()
     {
+
+		// Energy = some fucking algorith
 
 		hunger += Time.deltaTime / timeToDieByStarving;
 
 		thirst += Time.deltaTime / timeToDieByThirst;
 
         if (hunger >= 1) Die();
-        else if (thirst >= 1) Die();
+        if (thirst >= 1) Die();
     }
 
     protected void Die()

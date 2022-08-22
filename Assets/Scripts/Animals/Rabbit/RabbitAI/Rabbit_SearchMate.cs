@@ -7,20 +7,21 @@ public class Rabbit_SearchMate : Node
 {
 	private Transform _transform;
 	private LayerMask _mateLayerMask = LayerMask.GetMask("Rabbit");
-	
+	private Rabbit rabbit;
 
 	public Rabbit_SearchMate(Transform transform)
 	{
 		_transform = transform;
+		rabbit = _transform.GetComponent<Rabbit>();
 	}
 
 	public override NodeState Evaluate()
 	{
 
-		if (RabbitBT.rabbit.Mate == null)
+		if (rabbit.Mate == null)
 		{
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
-				RabbitBT.rabbit.visionRange,
+				rabbit.visionRange,
 				_mateLayerMask);
 
 			if(collider.Length > 0)
@@ -30,7 +31,7 @@ public class Rabbit_SearchMate : Node
 					if (col.GetComponent<Genes>().GetGender() 
 						!= _transform.GetComponent<Genes>().GetGender())
 					{
-						if (RabbitBT.rabbit.PotentialMate(col.GetComponent<Rabbit>()))
+						if (rabbit.PotentialMate(col.GetComponent<Rabbit>()))
 						{ 
 							parent.parent.SetData("Mate", col.transform);
 							state = NodeState.SUCCESS;

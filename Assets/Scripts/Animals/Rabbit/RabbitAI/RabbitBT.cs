@@ -7,8 +7,8 @@ using Pathfinding;
 [UnityEngine.RequireComponent(typeof(Rabbit))]
 public class RabbitBT : BehaviourTree.BehaviourTree
 {
-    public static Rabbit rabbit;
-	public static AIPath ai;
+	public Rabbit rabbit;
+	public AIPath ai;
 	public Node activeNode = null;
 
     public void Awake()
@@ -70,7 +70,7 @@ public class RabbitBT : BehaviourTree.BehaviourTree
 		   new Rabbit_RandomMove(transform, rabbit.searchRadius)
 		}) ;
          
-        UnityEngine.Debug.Log("Rabbit Behaviour Tree has been set up");
+        UnityEngine.Debug.Log("Rabbit Behaviour Tree has been set up" + GetInstanceID());
         return root;
     }
 

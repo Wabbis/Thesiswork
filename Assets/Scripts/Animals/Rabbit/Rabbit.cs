@@ -7,6 +7,9 @@ public class Rabbit : Animal
 {
 	private Rabbit mate;
 
+	public Color maleColor;
+	public Color femaleColor;
+
 	public Genes genes;
 
 	public Rabbit Mate
@@ -22,6 +25,19 @@ public class Rabbit : Animal
 	private float timeToForget = 5;
 	private List<Rabbit> rejections;
 
+	public void Start()
+	{
+		genes = Genes.RandomGenes(10);
+		Debug.Log("Animal gender: " + transform.GetComponent<Rabbit>().genes.isMale);
+		if (transform.GetComponent<Rabbit>().genes.isMale)
+		{
+			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = maleColor;
+		}
+		else
+		{
+			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = femaleColor;
+		}
+	}
 
 	// Male only
 	public bool PotentialMate(Rabbit mate) 
@@ -86,7 +102,7 @@ public class Rabbit : Animal
 		var tempSpeed = speed;
 		speed = 0;
 		GameObject child = Instantiate(prefab);
-		child.transform.position = Utility.FindRandomPointOnNavMesh(transform, 5.0f);
+		//child.transform.position = Utility.FindRandomPointOnNavMesh(transform, 5.0f);
 		child.transform.Rotate(new Vector3(child.transform.rotation.x, 
 			Random.rotation.eulerAngles.y,
 			child.transform.rotation.x));

@@ -7,10 +7,12 @@ public class Rabbit_TaskDrink : Node
 {
 	private Transform _transform;
 	private float timeCounter = 0f;
+	private Rabbit rabbit;
 	
 	public Rabbit_TaskDrink(Transform transform)
 	{
 		_transform = transform;
+		rabbit = _transform.GetComponent<Rabbit>();
 	}
 
 	public override NodeState Evaluate()
@@ -23,30 +25,32 @@ public class Rabbit_TaskDrink : Node
 			return state;
 		}
 
-		if (RabbitBT.rabbit.action != Animal.Action.MATING)
+		if (rabbit.action != Animal.Action.MATING)
 		{
-			RabbitBT.rabbit.action = Animal.Action.DRINKING;
+			rabbit.action = Animal.Action.DRINKING;
 
-			if(RabbitBT.rabbit.thirst > 0)
+			Debug.Log("Transform: " + _transform + " Reference: " + rabbit);
+
+			if(rabbit.thirst > 0)
 			{
 				float amount = Mathf.Min(
-					RabbitBT.rabbit.thirst, 
-					Time.deltaTime * 1 / RabbitBT.rabbit.thirst
+					rabbit.thirst, 
+					Time.deltaTime * 1 / rabbit.thirst
 					);
-				RabbitBT.rabbit.thirst -= amount;
+				rabbit.thirst -= amount;
 			}
 			else
 			{
-				RabbitBT.rabbit.thirst = 0;
+				rabbit.thirst = 0;
 			}
 
 			timeCounter += Time.deltaTime;
-			if(timeCounter > RabbitBT.rabbit.timeToDrink)
+			if(timeCounter > rabbit.timeToDrink)
 			{
 				Debug.Log("Done drinking");
 				timeCounter = 0f;
 				state = NodeState.SUCCESS;
-				RabbitBT.rabbit.action = Animal.Action.NONE;
+				rabbit.action = Animal.Action.NONE;
 				ClearData("Water");
 				return state;
 			}

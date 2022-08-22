@@ -8,9 +8,12 @@ public class Rabbit_WaterInRange : Node
 {
 	private Transform _transform;
 	private AIPath ai;
+	private Rabbit rabbit;
 	public Rabbit_WaterInRange(Transform transform)
 	{
+		
 		_transform = transform;
+		rabbit = _transform.GetComponent<Rabbit>();
 		ai = transform.GetComponent<AIPath>();
 	}
 
@@ -22,7 +25,7 @@ public class Rabbit_WaterInRange : Node
 			state = NodeState.FAILURE;
 			return state;
 		}
-		if (Vector3.Distance(_transform.position, target.position) < RabbitBT.rabbit.drinkRange)
+		if (Vector3.Distance(_transform.position, target.position) < rabbit.drinkRange)
 		{
 			ai.destination = _transform.position;
 			state = NodeState.SUCCESS;

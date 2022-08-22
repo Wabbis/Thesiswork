@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Genes : MonoBehaviour
-{
+public class Genes : Object
+{ 
     const float mutationChance = .5f;
     const float maxMutation = 0.2f;
     static System.Random rand = new System.Random();
@@ -18,7 +18,9 @@ public class Genes : MonoBehaviour
 
     public Genes(float[] values)
     {
-        isMale = rand.NextDouble() < 0.5;
+		var rnd = rand.NextDouble();
+		Debug.Log("rnd: "+rnd);
+		isMale = rnd < 0.5f;
         this.values = values;
     }
     
@@ -27,10 +29,11 @@ public class Genes : MonoBehaviour
         float[] values = new float[value];
         for(int i = 0; i < value; i++)
         {
-            values[i] = (float)rand.NextDouble();
+            values[i] = (float)Random.Range(0.9f,1.1f);
         }
-
+		Debug.Log("New genes");
         return new Genes(values);
+		
     } 
 
     public static Genes InheritedGenes(Genes mother, Genes father)

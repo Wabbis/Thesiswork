@@ -9,15 +9,17 @@ public class Rabbit_SearchForWater : Node
 	private AIPath ai;
 	private LayerMask _waterLayerMask = LayerMask.GetMask("Water");
 	private List<Transform> memory = new List<Transform>();
+	private Rabbit rabbit;
 public Rabbit_SearchForWater(Transform transform)
 	{
 		_transform = transform;
 		ai = transform.GetComponent<AIPath>();
+		rabbit = _transform.GetComponent<Rabbit>();
 	}
 
 	public override NodeState Evaluate()
 	{
-		if (RabbitBT.rabbit.thirst < 0.2f) 
+		if (rabbit.thirst < 0.2f) 
 		{
 			state = NodeState.FAILURE;
 			return state;
@@ -28,9 +30,9 @@ public Rabbit_SearchForWater(Transform transform)
 		if (target == null)
 		{
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
-				RabbitBT.rabbit.visionRange,
+				rabbit.visionRange,
 				_waterLayerMask);
-			if(collider.Length == 0 && RabbitBT.rabbit.thirst > 0.8f)
+			if(collider.Length == 0 && rabbit.thirst > 0.8f)
 			{
 				if(memory.Count == 0)
 				{
@@ -58,11 +60,22 @@ public Rabbit_SearchForWater(Transform transform)
 			if(collider.Length > 0)
 			{
 				Debug.Log("Water found");
-
-				parent.parent.SetData("Water", collider[0].transform);
-				if (!memory.Contains(collider[0].transform))
+				Transform closest = null;
+				float closestDistance = float.MaxValue;
+				foreach(Collider col in collider)
 				{
-					memory.Add(collider[0].transform);
+					float distance = Vector3.Distance(col.transform.position, _transform.position);
+
+					if (distance < closestDistance)
+					{
+						closest = col.transform;
+						closestDistance = distance;
+					}
+				}
+				parent.parent.SetData("Water", closest);
+				if (!memory.Contains(closest))
+				{
+					memory.Add(closest);
 				}
 				state = NodeState.SUCCESS;
 				return state;

@@ -7,16 +7,18 @@ public class Rabbit_SearchForFood : Node
 {
     private Transform _transform;
     private LayerMask _foodLayerMask = LayerMask.GetMask("Plant");
+	private Rabbit rabbit;
 
 
     public Rabbit_SearchForFood(Transform transform)
     {
         _transform = transform;
-    }
+		rabbit = _transform.GetComponent<Rabbit>();
+	}
 
     public override NodeState Evaluate()
     {
-		if(RabbitBT.rabbit.hunger < .2f)
+		if(rabbit.hunger < .2f)
 		{
 			state = NodeState.FAILURE;
 			return state;
@@ -27,7 +29,7 @@ public class Rabbit_SearchForFood : Node
         {
             
             Collider[] collider = Physics.OverlapSphere(_transform.position, 
-				RabbitBT.rabbit.visionRange, 
+				rabbit.visionRange, 
 				_foodLayerMask);
 
             if(collider.Length > 0)

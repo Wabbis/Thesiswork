@@ -7,10 +7,12 @@ public class Rabbit_TaskMoveToMate : Node
 {
 	private Transform _transform;
 	private float yOffset;
+	private Rabbit rabbit;
 	
 	public Rabbit_TaskMoveToMate(Transform transform)
 	{
 		_transform = transform;
+
 	}
 
 	public override NodeState Evaluate()
@@ -28,7 +30,7 @@ public class Rabbit_TaskMoveToMate : Node
 			_transform.position = Vector3.MoveTowards(
 				_transform.position,
 				mate.position,
-				RabbitBT.rabbit.speed * Time.deltaTime);
+				rabbit.speed * Time.deltaTime);
 			_transform.LookAt(new Vector3(mate.position.x, yOffset, mate.position.z));
 		}
 

@@ -5,10 +5,12 @@ using BehaviourTree;
 public class Rabbit_FoodInEatRange : Node
 {
     private Transform _transform;
+	private Rabbit rabbit;
 
     public Rabbit_FoodInEatRange(Transform transform)
     {
         _transform = transform;
+		rabbit = _transform.GetComponent<Rabbit>();
     }
 
     public override NodeState Evaluate()
@@ -20,7 +22,7 @@ public class Rabbit_FoodInEatRange : Node
             return state;
         }
         
-        if (Vector3.Distance(_transform.position, target.position) < RabbitBT.rabbit.eatRange)
+        if (Vector3.Distance(_transform.position, target.position) < rabbit.eatRange)
         {
             Debug.Log("Food in range");
             state = NodeState.SUCCESS;
