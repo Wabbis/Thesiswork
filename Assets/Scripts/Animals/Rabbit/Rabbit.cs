@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class Rabbit : Animal
 {
-	private Rabbit mate;
+	public Rabbit mate;
 
 	public Color maleColor;
 	public Color femaleColor;
 
 	public Genes genes;
-
 	public Rabbit Mate
 	{
 		get => mate;
@@ -23,13 +22,14 @@ public class Rabbit : Animal
 	}
 
 	private float timeToForget = 5;
-	private List<Rabbit> rejections;
+	public List<Rabbit> rejections;
 
 	public void Start()
 	{
-		genes = Genes.RandomGenes(10);
-		Debug.Log("Animal gender: " + transform.GetComponent<Rabbit>().genes.isMale);
-		if (transform.GetComponent<Rabbit>().genes.isMale)
+
+		
+		Debug.Log("Animal gender: " + genes.isMale);
+		if (genes.isMale)
 		{
 			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = maleColor;
 		}
@@ -37,34 +37,47 @@ public class Rabbit : Animal
 		{
 			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = femaleColor;
 		}
+
 	}
 
 	// Male only
 	public bool PotentialMate(Rabbit mate) 
 	{
+		Debug.Log("Potential mate is: " + mate);
+
+		if (rejections.Contains(mate))
+		{
+			Debug.Log("Already rejected");
+			return false;
+			
+		}
 		bool accepted = mate.RequestMate(this);
+		Debug.Log("mate requested...");
 		if (accepted)
 		{
-
+			Debug.Log("Accepted");
 			SetMate(mate);
 			return true;
 		}
 		else
 		{
+			Debug.Log("rejected");
 			AddRejection(mate);
-			RemoveRejection(timeToForget, mate);
+			StartCoroutine(RemoveRejection(timeToForget,mate));
 			return false;
 		}
 	}
 
 	private void AddRejection(Rabbit mate)
 	{
+		Debug.Log("Rejection added");
 		rejections.Add(mate);
 		
 	}
 
 	private IEnumerator RemoveRejection(float time, Rabbit mate)
 	{
+		Debug.Log("Rejected removed in " + time);
 		yield return new WaitForSeconds(time);
 		rejections.Remove(mate);
 	}
@@ -72,37 +85,46 @@ public class Rabbit : Animal
 	public void MatingEnded()
 	{
 		SetMate(null);
+		reproductiveUrge = 0;
 	}
 
 	// FEMALE ONLY 
 
 	public bool RequestMate(Rabbit mate)
 	{
-		if (mate.Desirability < Random.Range(0, 100))
+		if(isPregnant)
 		{
 			return false;
 		}
-		if (this.mate == null)
-			this.mate = mate;
+		if (reproductiveUrge > thirst && reproductiveUrge > hunger)
+		{
+			if (this.mate == null)
+			{
+				this.mate = mate;
+				return true;
+			}
+		}
 
-		return true;
+		return false;
 	}
 
 	public void GetPregnant(Rabbit father)
 	{
-		isPregnant = true; 
+		isPregnant = true;
+		StartCoroutine(Gestation(5, father));
 
 	}
 
-	private IEnumerator Gestation(float time)
+	private IEnumerator Gestation(float time, Rabbit father)
 	{
-		
+		Debug.Log("carrying a child"); 
 		yield return new WaitForSeconds(time);
-		isPregnant = false;
+		// isPregnant = false;
 		var tempSpeed = speed;
 		speed = 0;
+		yield return new WaitForSeconds(2);
 		GameObject child = Instantiate(prefab);
-		//child.transform.position = Utility.FindRandomPointOnNavMesh(transform, 5.0f);
+		child.GetComponent<Rabbit>().genes.InheritedGenes(genes, father.genes);
 		child.transform.Rotate(new Vector3(child.transform.rotation.x, 
 			Random.rotation.eulerAngles.y,
 			child.transform.rotation.x));

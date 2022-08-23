@@ -28,7 +28,7 @@ public class Animal : MonoBehaviour
 	// Reproduction Settings	
 	[Header("Reproduction")]
 	public float timeToMate;
-	public float reproductiveUrge; 
+	public float reproductiveUrge;  
 	// Female only
 	public bool isPregnant = false;
 	public float pregnancyDuration = 10f;
@@ -57,6 +57,7 @@ public class Animal : MonoBehaviour
 	public void Update()
     {
 
+		reproductiveUrge += Time.deltaTime;
 		// Energy = some fucking algorith
 
 		hunger += Time.deltaTime / timeToDieByStarving;

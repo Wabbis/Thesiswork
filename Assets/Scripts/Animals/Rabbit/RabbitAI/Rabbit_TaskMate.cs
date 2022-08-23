@@ -18,20 +18,24 @@ public class Rabbit_TaskMate : Node
 
 	public override NodeState Evaluate()
 	{
-		Transform mate = (Transform)GetData("Mate");
-
-		if (mate == null)
+		if (rabbit.Mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
 
+		Transform mate = rabbit.Mate.transform;
 		rabbit.action = Animal.Action.MATING;
 
 		timeCounter += Time.deltaTime;
+		_transform.Rotate(Vector3.up, 10);
 		if (timeCounter > 3f)
 		{
 			Debug.Log("Mating ended");
+			if (!rabbit.genes.isMale)
+			{
+				rabbit.GetPregnant(rabbit.Mate);
+			}
 			rabbit.action = Animal.Action.NONE;
 			timeCounter = 0f;
 			state = NodeState.SUCCESS;

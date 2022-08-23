@@ -17,23 +17,37 @@ public class Rabbit_SearchMate : Node
 
 	public override NodeState Evaluate()
 	{
-
+		if(!rabbit.genes.isMale)
+		{
+			if (rabbit.Mate == null)
+			{
+				state = NodeState.FAILURE;
+				return state;
+			}
+			else
+			{
+				state = NodeState.SUCCESS;
+				return state;
+			}
+		}
+		
 		if (rabbit.Mate == null)
 		{
+			Debug.Log("Searching for mate");
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
 				rabbit.visionRange,
 				_mateLayerMask);
-
+			Debug.Log(collider.Length);
 			if(collider.Length > 0)
 			{
 				foreach(Collider col in collider)
 				{
-					if (col.GetComponent<Genes>().GetGender() 
-						!= _transform.GetComponent<Genes>().GetGender())
+					if (!col.GetComponent<Genes>().isMale)
 					{
 						if (rabbit.PotentialMate(col.GetComponent<Rabbit>()))
-						{ 
-							parent.parent.SetData("Mate", col.transform);
+						{
+							Debug.Log("Mate found");
+							// parent.parent.SetData("Mate", col.transform);
 							state = NodeState.SUCCESS;
 							return state;
 						}
@@ -45,7 +59,7 @@ public class Rabbit_SearchMate : Node
 			return state;
 		}
 
-		state = NodeState.RUNNING;
+		state = NodeState.SUCCESS;
 		return state;
 		
 	}

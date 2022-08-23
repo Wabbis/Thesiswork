@@ -2,36 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
+using Pathfinding;
 
 public class Rabbit_TaskMoveToMate : Node
 {
 	private Transform _transform;
-	private float yOffset;
 	private Rabbit rabbit;
+	private AIPath ai;
 	
 	public Rabbit_TaskMoveToMate(Transform transform)
 	{
 		_transform = transform;
-
+		ai = _transform.GetComponent<AIPath>();
+		rabbit = _transform.GetComponent<Rabbit>();
 	}
 
 	public override NodeState Evaluate()
 	{
-		Transform mate = (Transform)GetData("Mate");
+		Transform mate = rabbit.Mate.transform;
 
 		if (mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
-		
-		if (Vector3.Distance(_transform.position, mate.position) > 1.5f) 
+		ai.destination = mate.position;
+		if (ai.reachedDestination)
 		{
-			_transform.position = Vector3.MoveTowards(
-				_transform.position,
-				mate.position,
-				rabbit.speed * Time.deltaTime);
-			_transform.LookAt(new Vector3(mate.position.x, yOffset, mate.position.z));
+			state = NodeState.SUCCESS;
+			return state;
 		}
 
 		state = NodeState.RUNNING;

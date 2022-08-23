@@ -5,25 +5,31 @@ using BehaviourTree;
 public class Rabbit_MateInRange : Node
 {
 	private Transform _transform;
+	private Rabbit rabbit;
 
 	public Rabbit_MateInRange(Transform transform)
 	{
-		_transform = transform; 
+		_transform = transform;
+		rabbit = _transform.GetComponent<Rabbit>();
 	}
 
 	public override NodeState Evaluate()
 	{
+		if(rabbit.action == Animal.Action.MATING)
+		{
+			state = NodeState.SUCCESS;
+			return state;
+		}
 
-		Transform mate = (Transform)GetData("Mate");
-		if (mate == null)
+
+		if (rabbit.Mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
-
-		if(Vector3.Distance(_transform.position, mate.position) < 1.5f)
+		Transform mate = rabbit.Mate.transform;
+		if (Vector3.Distance(_transform.position, mate.position) < 1.5f)
 		{
-			Debug.Log("mate in range");
 			state = NodeState.SUCCESS;
 			return state;
 		}

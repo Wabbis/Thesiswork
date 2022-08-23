@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5587668823224020419}
   - component: {fileID: 5587668823224020422}
   - component: {fileID: 5587668823224020423}
+  - component: {fileID: 1998873087610136461}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Untagged
@@ -154,9 +155,11 @@ MonoBehaviour:
   timeToDieByThirst: 200
   hunger: 0
   thirst: 0
+  mate: {fileID: 0}
   maleColor: {r: 0.9245283, g: 0.54990727, b: 0.16135636, a: 0}
   femaleColor: {r: 0.5566038, g: 0.12689675, b: 0, a: 0}
-  genes: {fileID: 0}
+  genes: {fileID: 1998873087610136461}
+  rejections: []
 --- !u!114 &5587668823224020423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +172,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f299b93fbe6afc40bff6625bf20c54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rabbit: {fileID: 0}
+  ai: {fileID: 0}
+--- !u!114 &1998873087610136461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5587668823224020428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1917a2dadac176a41beb27aa4f196014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMale: 0
+  values:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
 --- !u!1 &5587668824006035310
 GameObject:
   m_ObjectHideFlags: 0
