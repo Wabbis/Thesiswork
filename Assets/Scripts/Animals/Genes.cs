@@ -4,73 +4,165 @@ using UnityEngine;
 
 public class Genes : MonoBehaviour
 { 
-    const float mutationChance = .5f;
+    const float mutationChance = 50f;
     const float maxMutation = 0.2f;
     static System.Random rand = new System.Random();
 
 	public bool isMale;
+
+	public enum Gender
+	{
+		MALE,
+		FEMALE
+	}
+
+	public Gender gender;
 	public bool GetGender()
 	{
 		return isMale;
 	}
 
     public float[] values;
+	public float[] femaleValues;
+	public float[] maleValues;
 
-    public Genes(float[] values)
+	public Genes(float[] gValues, float[] fValues, float[] mValues, Gender sex) 
     {
-		var rnd = rand.NextDouble();
-		Debug.Log("rnd: "+rnd);
-		isMale = rnd < 0.5f;
-        this.values = values;
-    }
-    
-    public Genes RandomGenes (int value)
-    {
-        float[] values = new float[value];
-        for(int i = 0; i < value; i++)
-        {
-            values[i] = (float)Random.Range(0.9f,1.1f);
-        }
-        Genes genes = new Genes(values);
-		return genes;
-    } 
+		gender = sex;
+		if(gender==Gender.MALE)
+		{
+			isMale = true;
+		}
+        values = gValues;
+		femaleValues = fValues;
+		maleValues = mValues;
+	}
 
-    public Genes InheritedGenes(Genes mother, Genes father)
-    {
-		float[] newValues = new float[mother.values.Length];
+	public void AssignGenes(float[] gValues, float[] fValues, float[] mValues, Gender sex)
+	{
+		gender = sex;
+		values = gValues;
+		femaleValues = fValues;
+		maleValues = mValues;
+	}
 
+	public void InheritedGenes(Genes mother, Genes father)
+	{
+		Gender gender;
+		if(rand.Next(1,101) > 50)
+		{
+			gender = Gender.MALE;
+		}
+		else
+		{
+			gender = Gender.FEMALE;
+		}
+
+		float[] gValues = GeneralGenes(mother, father);
+		float[] fValues = FemaleGenes(mother, father);
+		float[] mValues = MaleGenes(mother, father);
+
+		AssignGenes(gValues, fValues, mValues, gender);
+	}
+
+	public float[] GeneralGenes(Genes mother, Genes father)
+	{
+
+		float[] values = new float[mother.values.Length];
 		// Brake two genes to components and connect them 50-50
 		// select half of the mother genes and fill in rest from the father
-
 		int fromMother = 0;
 		int current = 0;
-		for (int i = 0; i < newValues.Length; i++)
+		for (int i = 0; i < values.Length; i++)
 		{
 			float chance = (((float)values.Length / 2) - fromMother) / ((float)values.Length - i);
 			if (rand.NextDouble() <= chance && chance != 0)
 			{
-				newValues[current] = mother.values[current];
-				if(rand.Next(1,101) < 50)
+				values[current] = mother.values[current];
+				var roll = rand.Next(1, 101);
+
+				if (roll < mutationChance)
 				{
-					newValues[current] += Random.Range(-maxMutation, maxMutation);
+					values[current] += Random.Range(-maxMutation, maxMutation);
+
 				}
 				fromMother++;
 			}
 			else
 			{
-				newValues[current] = father.values[current];
-				if (rand.Next(1, 101) < 50)
+				values[current] = father.values[current];
+				var roll = rand.Next(1, 101);
+
+				if (roll < mutationChance)
 				{
-					newValues[current] += Random.Range(-maxMutation, maxMutation);
+					values[current] += Random.Range(-maxMutation, maxMutation);
+
 				}
 			}
 			current++;
 		}
-		Debug.LogError("New values created");
-		values = newValues;
-        Genes genes = new Genes(values);
-        return genes;
-    }
+		return values;
+	}
+	public float[] MaleGenes(Genes mother, Genes father)
+	{
 
+		float[] values = new float[mother.maleValues.Length];
+		int fromMother = 0;
+		int current = 0;
+		for (int i = 0; i < values.Length; i++)
+		{
+			float chance = (((float)maleValues.Length / 2) - fromMother) / ((float)maleValues.Length - i);
+			if (rand.NextDouble() <= chance && chance != 0)
+			{
+				values[current] = mother.maleValues[current];
+				if (rand.Next(1, 101) < mutationChance)
+				{
+					values[current] += Random.Range(-maxMutation, maxMutation);
+				}
+				fromMother++;
+			}
+			else
+			{
+				values[current] = father.maleValues[current];
+				if (rand.Next(1, 101) < mutationChance)
+				{
+					values[current] = Random.Range(-maxMutation, maxMutation);
+				}
+			}
+			current++;
+		}
+		return values;
+	}
+	public float[] FemaleGenes(Genes mother, Genes father)
+	{
 
+		float[] values = new float[mother.femaleValues.Length];
+		int fromMother = 0;
+		int current = 0;
+		for (int i = 0; i < values.Length; i++)
+		{
+			float chance = (((float)femaleValues.Length / 2) - fromMother) / ((float)femaleValues.Length - i);
+			if (rand.NextDouble() <= chance && chance != 0)
+			{
+				values[current] = mother.femaleValues[current];
+				if (rand.Next(1, 101) < mutationChance)
+				{
+					values[current] += Random.Range(-maxMutation, maxMutation);
+
+				}
+				fromMother++;
+			}
+			else
+			{
+				values[current] = father.femaleValues[current];
+				if (rand.Next(1, 101) < mutationChance)
+				{
+					values[current] = Random.Range(-maxMutation, maxMutation);
+
+				}
+			}
+			current++;
+		}
+		return values;
+	}
 }

@@ -17,6 +17,12 @@ public class Rabbit_SearchMate : Node
 
 	public override NodeState Evaluate()
 	{
+		if(rabbit.Mate != null)
+		{
+			state = NodeState.SUCCESS;
+			return state;
+		}
+
 		if(!rabbit.genes.isMale)
 		{
 			if (rabbit.Mate == null)
@@ -31,7 +37,7 @@ public class Rabbit_SearchMate : Node
 			}
 		}
 		
-		if (rabbit.Mate == null)
+		if (rabbit.Mate == null && rabbit.reproductiveUrge > 25)
 		{
 			Debug.Log("Searching for mate");
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
@@ -59,7 +65,7 @@ public class Rabbit_SearchMate : Node
 			return state;
 		}
 
-		state = NodeState.SUCCESS;
+		state = NodeState.FAILURE;
 		return state;
 		
 	}

@@ -92,7 +92,7 @@ public class Rabbit : Animal
 
 	public bool RequestMate(Rabbit mate)
 	{
-		if(isPregnant)
+		if(isPregnant || reproductiveUrge < 25)
 		{
 			return false;
 		}
@@ -123,9 +123,10 @@ public class Rabbit : Animal
 		var tempSpeed = speed;
 		speed = 0;
 		yield return new WaitForSeconds(2);
-		GameObject child = Instantiate(prefab);
-		child.GetComponent<Rabbit>().genes.InheritedGenes(genes, father.genes);
-		child.transform.Rotate(new Vector3(child.transform.rotation.x, 
+		GameObject child = Resources.Load("Animals/Rabbit") as GameObject;
+		GameObject newChild = Instantiate(child);
+		newChild.GetComponent<Rabbit>().genes.InheritedGenes(genes, father.genes);
+		newChild.transform.Rotate(new Vector3(child.transform.rotation.x, 
 			Random.rotation.eulerAngles.y,
 			child.transform.rotation.x));
 

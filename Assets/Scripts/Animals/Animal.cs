@@ -10,11 +10,11 @@ public class Animal : MonoBehaviour
 		NONE,
 		EATING,
 		DRINKING,
-		MATING
+		MATING,
+		MOVING
 	}
 
-	public GameObject prefab; 
-
+	public GameObject prefab;
 	protected bool dead = false;
 	public Action action = Action.NONE;
 
@@ -50,22 +50,22 @@ public class Animal : MonoBehaviour
     public float timeToDieByThirst;
 
     [Header("State")]
-    public float hunger;
-    public float thirst;
-
+    public float hunger = 0;
+    public float thirst = 0;
 
 	public void Update()
     {
 
 		reproductiveUrge += Time.deltaTime;
-		// Energy = some fucking algorith
+		// some fucking algorith
+		energy -= 0.0001f * (speed + size) / Time.deltaTime;
+	
 
-		hunger += Time.deltaTime / timeToDieByStarving;
+		hunger += Time.deltaTime * 100 / timeToDieByStarving;
+		thirst += Time.deltaTime * 100 / timeToDieByThirst;
 
-		thirst += Time.deltaTime / timeToDieByThirst;
-
-        if (hunger >= 1) Die();
-        if (thirst >= 1) Die();
+        if (hunger >= 100) Die();
+        if (thirst >= 100) Die();
     }
 
     protected void Die()
@@ -79,6 +79,7 @@ public class Animal : MonoBehaviour
 
 	private void OnDrawGizmosSelected()
 	{
+		
 		// Show search radius
 		Handles.DrawWireDisc(transform.position, Vector3.up, searchRadius);
 
@@ -90,6 +91,8 @@ public class Animal : MonoBehaviour
 	}
 
 	
+
+
 }
 
 

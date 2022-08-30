@@ -114,6 +114,10 @@ MonoBehaviour:
   DisableSpawning: 0
   slider: {fileID: 3179843367780140464}
   prefab: {fileID: 2369029073134225607}
+  reproductionRate: 5
+  reprodcutionAmount: 3
+  reproductionRange: 10
+  timeToDie: 10
 --- !u!1 &3179843367780140470
 GameObject:
   m_ObjectHideFlags: 0

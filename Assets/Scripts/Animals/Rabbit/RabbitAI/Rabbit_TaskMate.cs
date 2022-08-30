@@ -38,12 +38,11 @@ public class Rabbit_TaskMate : Node
 			}
 			rabbit.action = Animal.Action.NONE;
 			timeCounter = 0f;
+			rabbit.reproductiveUrge = 0f;
 			state = NodeState.SUCCESS;
 			ClearData("Mate");
 			rabbit.MatingEnded();
 			return state;
-
-
 		}
 
 		state = NodeState.RUNNING;
