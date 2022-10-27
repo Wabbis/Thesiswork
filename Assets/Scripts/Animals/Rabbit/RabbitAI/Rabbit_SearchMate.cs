@@ -23,7 +23,7 @@ public class Rabbit_SearchMate : Node
 			return state;
 		}
 
-		if(!rabbit.genes.isMale)
+		if (rabbit.genes.gender == Genes.Gender.FEMALE)
 		{
 			if (rabbit.Mate == null)
 			{
@@ -37,18 +37,21 @@ public class Rabbit_SearchMate : Node
 			}
 		}
 		
-		if (rabbit.Mate == null && rabbit.reproductiveUrge > 25)
+		if (rabbit.Mate == null && rabbit.reproductiveUrge > 25 && rabbit.genes.gender == Genes.Gender.MALE)
 		{
 			Debug.Log("Searching for mate");
+			int oldLayer = rabbit.gameObject.layer;
+			rabbit.gameObject.layer = 2;
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
 				rabbit.visionRange,
 				_mateLayerMask);
+			rabbit.gameObject.layer = oldLayer;
 			Debug.Log(collider.Length);
 			if(collider.Length > 0)
 			{
 				foreach(Collider col in collider)
 				{
-					if (!col.GetComponent<Genes>().isMale)
+					if (col.GetComponent<Genes>().gender == Genes.Gender.FEMALE )
 					{
 						if (rabbit.PotentialMate(col.GetComponent<Rabbit>()))
 						{

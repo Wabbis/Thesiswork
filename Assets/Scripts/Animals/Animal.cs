@@ -11,7 +11,8 @@ public class Animal : MonoBehaviour
 		EATING,
 		DRINKING,
 		MATING,
-		MOVING
+		MOVING,
+		RUNNING
 	}
 
 	public GameObject prefab;
@@ -34,7 +35,7 @@ public class Animal : MonoBehaviour
 	public float pregnancyDuration = 10f;
 
 	// Male only
-	public float Desirability = 100f; // Values from 0.1 to 100 male only, 0 for female
+	// NYI : public float Desirability = 100f; // Values from 0.1 to 100 male only, 0 for female
 
 	// General settings:
 	[Header("General")]
@@ -58,13 +59,14 @@ public class Animal : MonoBehaviour
 
 		reproductiveUrge += Time.deltaTime;
 		// some fucking algorith
-		energy -= 0.0001f * (speed + size) / Time.deltaTime;
+		energy -= 0.0001f * (speed * size) / Time.deltaTime;
 	
 
-		hunger += Time.deltaTime * 100 / timeToDieByStarving;
-		thirst += Time.deltaTime * 100 / timeToDieByThirst;
+		hunger += Time.deltaTime / timeToDieByStarving;
+		thirst += Time.deltaTime / timeToDieByThirst;
+		
 
-        if (hunger >= 100) Die();
+		if (hunger >= 100) Die();
         if (thirst >= 100) Die();
     }
 

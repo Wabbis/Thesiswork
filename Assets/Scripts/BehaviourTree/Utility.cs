@@ -20,30 +20,20 @@ using Pathfinding;
             return pointOnNavMesh;
         }
 
-        public static double RandomGaussian(double mean, double stdDev)
-        {
-            System.Random rand = new System.Random();
-            double u1 = 1.0 - rand.NextDouble();
-            double u2 = 1.0 - rand.NextDouble();
-            
-            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) *
-                Math.Sin(2.0 * Math.PI * u2);
-            double randNormal = mean + stdDev * randStdNormal;
-            return randStdNormal;
-
-        }
-
 	public static Vector3 FindRandomNodeOnAstarGrid(Transform transform, float radius)
 	{
 		Vector3 randomPoint = Vector3.zero;
 		GraphNode randomNode;
-		Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
-		randomDirection += transform.position;
-		randomNode = AstarPath.active.GetNearest(randomDirection).node;
-		if(randomNode.Walkable)
+		do
 		{
-			randomPoint = randomNode.RandomPointOnSurface();
-		}
+			Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+			randomDirection += transform.position;
+			randomNode = AstarPath.active.GetNearest(randomDirection).node;
+			if (randomNode.Walkable)
+			{
+				randomPoint = randomNode.RandomPointOnSurface();
+			}
+		} while (!randomNode.Walkable);
 		return randomPoint;
 	}
     }

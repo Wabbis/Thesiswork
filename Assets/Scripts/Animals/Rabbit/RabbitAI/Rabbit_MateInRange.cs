@@ -21,12 +21,12 @@ public class Rabbit_MateInRange : Node
 			return state;
 		}
 
-
 		if (rabbit.Mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
+
 		Transform mate = rabbit.Mate.transform;
 		if (Vector3.Distance(_transform.position, mate.position) < 1.5f)
 		{

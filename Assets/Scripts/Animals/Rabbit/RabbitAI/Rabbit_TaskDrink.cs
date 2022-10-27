@@ -29,15 +29,10 @@ public class Rabbit_TaskDrink : Node
 		{
 			rabbit.action = Animal.Action.DRINKING;
 
-			Debug.Log("Transform: " + _transform + " Reference: " + rabbit);
-
 			if(rabbit.thirst > 0)
 			{
-				float amount = Mathf.Min(
-					rabbit.thirst, 
-					Time.deltaTime * 1 / rabbit.thirst
-					);
-				rabbit.thirst -= amount;
+				rabbit.thirst -= Time.deltaTime * 1 / rabbit.timeToDrink;
+				rabbit.thirst = Mathf.Clamp01(rabbit.thirst);
 			}
 			else
 			{

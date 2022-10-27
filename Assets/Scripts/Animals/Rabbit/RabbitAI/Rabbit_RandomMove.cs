@@ -9,7 +9,7 @@ public class Rabbit_RandomMove : Node
 {
     private Transform _transform;
     private Vector3 _destination;
-    private float _waitTime = 5f;
+    private float _waitTime = 2f;
     private float _waitCounter = 0f;
     private bool _waiting = false;
     private float _searchRadius;
@@ -23,8 +23,6 @@ public class Rabbit_RandomMove : Node
 		_destination = Utility.FindRandomNodeOnAstarGrid(_transform, _searchRadius);
 		ai.destination = _destination;
 	}
-
-	
 
     public override NodeState Evaluate()
     {

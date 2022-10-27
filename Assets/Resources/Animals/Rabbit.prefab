@@ -1036,9 +1036,9 @@ GameObject:
   - component: {fileID: 5587668823224020423}
   - component: {fileID: 1998873087610136461}
   - component: {fileID: -8725467677707324024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rabbit
-  m_TagString: Untagged
+  m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1178,8 +1178,8 @@ MonoBehaviour:
   hunger: 0
   thirst: 0
   mate: {fileID: 0}
-  maleColor: {r: 0.9245283, g: 0.54990727, b: 0.16135636, a: 0}
-  femaleColor: {r: 0.5566038, g: 0.12689675, b: 0, a: 0}
+  maleColor: {r: 0.8584906, g: 0.4277065, b: 0, a: 0}
+  femaleColor: {r: 0.8018868, g: 0.21005411, b: 0, a: 0}
   genes: {fileID: 1998873087610136461}
   rejections: []
 --- !u!114 &5587668823224020423
@@ -1208,20 +1208,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1917a2dadac176a41beb27aa4f196014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMale: 0
   gender: 1
   values:
-  - 11
-  - 22
-  - 33
-  - 44
-  - 55
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   femaleValues:
-  - 66
-  - 77
+  - 1
+  - 1
   maleValues:
-  - 88
-  - 99
+  - 1
+  - 1
 --- !u!135 &-8725467677707324024
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1249,7 +1248,7 @@ GameObject:
   - component: {fileID: 5587668824006035308}
   - component: {fileID: 5587668824006035296}
   - component: {fileID: 5587668824006035301}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

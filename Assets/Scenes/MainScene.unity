@@ -3532,7 +3532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 136.9
+      value: 109.4
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3540,7 +3540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.6
+      value: 42.3
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6568,7 +6568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 118.22
+      value: 101.9
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6576,7 +6576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.52
+      value: 57.4
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020416, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6632,7 +6632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020422, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: thirst
-      value: 0.01
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5587668823224020422, guid: defa7bd07d6a0794381586ee680db8cf, type: 3}
       propertyPath: reproductiveUrge

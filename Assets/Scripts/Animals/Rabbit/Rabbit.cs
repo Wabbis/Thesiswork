@@ -28,8 +28,8 @@ public class Rabbit : Animal
 	{
 
 		
-		Debug.Log("Animal gender: " + genes.isMale);
-		if (genes.isMale)
+		Debug.Log("Animal gender: " + genes.gender);
+		if (genes.gender == Genes.Gender.MALE)
 		{
 			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = maleColor;
 		}
@@ -37,6 +37,15 @@ public class Rabbit : Animal
 		{
 			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = femaleColor;
 		}
+
+	}
+
+	public void InitGenes()
+	{
+		size *= genes.values[0];
+		speed *= genes.values[1];
+
+
 
 	}
 
@@ -111,7 +120,7 @@ public class Rabbit : Animal
 	public void GetPregnant(Rabbit father)
 	{
 		isPregnant = true;
-		StartCoroutine(Gestation(5, father));
+		StartCoroutine(Gestation(pregnancyDuration, father));
 
 	}
 
@@ -126,6 +135,7 @@ public class Rabbit : Animal
 		GameObject child = Resources.Load("Animals/Rabbit") as GameObject;
 		GameObject newChild = Instantiate(child);
 		newChild.GetComponent<Rabbit>().genes.InheritedGenes(genes, father.genes);
+		newChild.transform.position = transform.position;
 		newChild.transform.Rotate(new Vector3(child.transform.rotation.x, 
 			Random.rotation.eulerAngles.y,
 			child.transform.rotation.x));

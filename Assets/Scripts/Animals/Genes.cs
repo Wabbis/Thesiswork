@@ -6,10 +6,11 @@ public class Genes : MonoBehaviour
 { 
     const float mutationChance = 50f;
     const float maxMutation = 0.2f;
-    static System.Random rand = new System.Random();
+    static readonly System.Random rand = new System.Random();
 
-	public bool isMale;
-
+	/// <summary>
+	///  0 = MALE, 1 = FEMALE
+	/// </summary>
 	public enum Gender
 	{
 		MALE,
@@ -17,10 +18,6 @@ public class Genes : MonoBehaviour
 	}
 
 	public Gender gender;
-	public bool GetGender()
-	{
-		return isMale;
-	}
 
     public float[] values;
 	public float[] femaleValues;
@@ -29,10 +26,6 @@ public class Genes : MonoBehaviour
 	public Genes(float[] gValues, float[] fValues, float[] mValues, Gender sex) 
     {
 		gender = sex;
-		if(gender==Gender.MALE)
-		{
-			isMale = true;
-		}
         values = gValues;
 		femaleValues = fValues;
 		maleValues = mValues;

@@ -23,8 +23,6 @@ public class Rabbit_TaskMate : Node
 			state = NodeState.FAILURE;
 			return state;
 		}
-
-		Transform mate = rabbit.Mate.transform;
 		rabbit.action = Animal.Action.MATING;
 
 		timeCounter += Time.deltaTime;
@@ -32,10 +30,7 @@ public class Rabbit_TaskMate : Node
 		if (timeCounter > 3f)
 		{
 			Debug.Log("Mating ended");
-			if (!rabbit.genes.isMale)
-			{
-				rabbit.GetPregnant(rabbit.Mate);
-			}
+			if (rabbit.genes.gender == Genes.Gender.FEMALE) { rabbit.GetPregnant(rabbit.Mate); }
 			rabbit.action = Animal.Action.NONE;
 			timeCounter = 0f;
 			rabbit.reproductiveUrge = 0f;
