@@ -15,6 +15,7 @@ public class Animal : MonoBehaviour
 		RUNNING
 	}
 
+	public bool DEBUG;
 	public GameObject prefab;
 	protected bool dead = false;
 	public Action action = Action.NONE;
@@ -39,7 +40,9 @@ public class Animal : MonoBehaviour
 
 	// General settings:
 	[Header("General")]
+	public float maxEnergy;
 	public float energy;
+	public float mass;
     public float speed;
     public float size;
     public float searchRadius;
@@ -56,39 +59,42 @@ public class Animal : MonoBehaviour
 
 	public void Update()
     {
-
 		reproductiveUrge += Time.deltaTime;
 		// some fucking algorith
-		energy -= 0.0001f * (speed * size) / Time.deltaTime;
-	
+		energy -= Mathf.Pow(mass, 0.75f)  * Time.deltaTime;
+
+		//energy -= mass;
 
 		hunger += Time.deltaTime / timeToDieByStarving;
 		thirst += Time.deltaTime / timeToDieByThirst;
 		
+		if(energy > maxEnergy) energy = maxEnergy;
 
 		if (hunger >= 100) Die();
         if (thirst >= 100) Die();
+		if (energy <= 0) Die();
     }
 
     protected void Die()
     {
         if (!dead)
         {
-            dead = true;
+		    dead = true;
             Destroy(gameObject);
         }
     }
 
 	private void OnDrawGizmosSelected()
 	{
-		
-		// Show search radius
-		Handles.DrawWireDisc(transform.position, Vector3.up, searchRadius);
+		if (DEBUG)
+		{
+			// Show search radius
+			Handles.DrawWireDisc(transform.position, Vector3.up, searchRadius);
 
-		// Show FoV
-		Vector3 fromVector = Quaternion.AngleAxis(-0.5f * fieldOfViewAngle, Vector3.up) * transform.forward;
-		Handles.DrawSolidArc(transform.position, Vector3.up, fromVector, fieldOfViewAngle,  visionRange);
-
+			// Show FoV
+			Vector3 fromVector = Quaternion.AngleAxis(-0.5f * fieldOfViewAngle, Vector3.up) * transform.forward;
+			Handles.DrawSolidArc(transform.position, Vector3.up, fromVector, fieldOfViewAngle, visionRange);
+		}
 		
 	}
 

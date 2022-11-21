@@ -26,8 +26,7 @@ public class Rabbit : Animal
 
 	public void Start()
 	{
-
-		
+	
 		Debug.Log("Animal gender: " + genes.gender);
 		if (genes.gender == Genes.Gender.MALE)
 		{
@@ -101,7 +100,7 @@ public class Rabbit : Animal
 
 	public bool RequestMate(Rabbit mate)
 	{
-		if(isPregnant || reproductiveUrge < 25)
+		if(isPregnant || reproductiveUrge < 25 || action != Action.NONE)
 		{
 			return false;
 		}
@@ -126,9 +125,8 @@ public class Rabbit : Animal
 
 	private IEnumerator Gestation(float time, Rabbit father)
 	{
-		Debug.Log("carrying a child"); 
 		yield return new WaitForSeconds(time);
-		// isPregnant = false;
+		isPregnant = false;
 		var tempSpeed = speed;
 		speed = 0;
 		yield return new WaitForSeconds(2);

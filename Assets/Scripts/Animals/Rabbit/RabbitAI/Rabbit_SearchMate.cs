@@ -17,12 +17,13 @@ public class Rabbit_SearchMate : Node
 
 	public override NodeState Evaluate()
 	{
+		// Skip search if rabbit already has a partner
 		if(rabbit.Mate != null)
 		{
 			state = NodeState.SUCCESS;
 			return state;
 		}
-
+		// Female rabbits dont search for mates, hence pass on if female has a mate already, otherwise skip this step
 		if (rabbit.genes.gender == Genes.Gender.FEMALE)
 		{
 			if (rabbit.Mate == null)

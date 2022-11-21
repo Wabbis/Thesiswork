@@ -34,6 +34,7 @@ public class Rabbit_TaskEat : Node
 					Time.deltaTime * 1 / rabbit.timeToEat
 					);
 				rabbit.hunger -= amount;
+				rabbit.energy += rabbit.timeToEat / 50 ; 
 			}
 			else
 			{

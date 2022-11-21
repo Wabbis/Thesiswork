@@ -19,7 +19,7 @@ public Rabbit_SearchForWater(Transform transform)
 
 	public override NodeState Evaluate()
 	{
-		if (rabbit.thirst < 0.2f || rabbit.action != Animal.Action.EATING || rabbit.action != Animal.Action.MATING) 
+		if (rabbit.thirst < 0.2f || rabbit.action == Animal.Action.EATING || rabbit.action == Animal.Action.MATING) 
 		{
 			state = NodeState.FAILURE;
 			return state;

@@ -16,7 +16,7 @@ public class Rabbit_FoodInEatRange : Node
     public override NodeState Evaluate()
     {
         Transform target = (Transform)GetData("Food");
-        if (target == null)
+        if (target == null || rabbit.action == Animal.Action.DRINKING || rabbit.action == Animal.Action.MATING)
         {
             state = NodeState.FAILURE;
             return state;

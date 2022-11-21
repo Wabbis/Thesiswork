@@ -20,7 +20,7 @@ public class Rabbit_WaterInRange : Node
 	public override NodeState Evaluate()
 	{
 		Transform target = (Transform)GetData("Water");
-		if (target == null)
+		if (target == null || rabbit.action == Animal.Action.EATING || rabbit.action == Animal.Action.MATING)
 		{
 			state = NodeState.FAILURE;
 			return state;
