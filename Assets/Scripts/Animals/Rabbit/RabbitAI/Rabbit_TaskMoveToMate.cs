@@ -20,12 +20,12 @@ public class Rabbit_TaskMoveToMate : Node
 	public override NodeState Evaluate()
 	{
 		Transform mate = rabbit.Mate.transform;
-
 		if (mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
+		rabbit.action = Animal.Action.MATING;
 		ai.destination = mate.position;
 		if (ai.reachedDestination)
 		{

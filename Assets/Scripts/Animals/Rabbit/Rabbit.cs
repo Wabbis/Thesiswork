@@ -64,6 +64,7 @@ public class Rabbit : Animal
 		if (accepted)
 		{
 			Debug.Log("Accepted");
+			action = Action.MATING;
 			SetMate(mate);
 			return true;
 		}
@@ -108,6 +109,7 @@ public class Rabbit : Animal
 		{
 			if (this.mate == null)
 			{
+				action = Action.MATING;
 				this.mate = mate;
 				return true;
 			}

@@ -40,6 +40,7 @@ public class Animal : MonoBehaviour
 
 	// General settings:
 	[Header("General")]
+	public float age = 0;
 	public float maxEnergy;
 	public float energy;
 	public float mass;
@@ -64,7 +65,7 @@ public class Animal : MonoBehaviour
 		energy -= Mathf.Pow(mass, 0.75f)  * Time.deltaTime;
 
 		//energy -= mass;
-
+		age += Time.deltaTime;
 		hunger += Time.deltaTime / timeToDieByStarving;
 		thirst += Time.deltaTime / timeToDieByThirst;
 		
@@ -73,6 +74,7 @@ public class Animal : MonoBehaviour
 		if (hunger >= 100) Die();
         if (thirst >= 100) Die();
 		if (energy <= 0) Die();
+		if (age > 120f) Die();
     }
 
     protected void Die()

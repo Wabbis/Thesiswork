@@ -23,7 +23,6 @@ public class Rabbit_TaskMate : Node
 			state = NodeState.FAILURE;
 			return state;
 		}
-		rabbit.action = Animal.Action.MATING;
 
 		timeCounter += Time.deltaTime;
 		_transform.Rotate(Vector3.up, 10);

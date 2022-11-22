@@ -1156,18 +1156,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a834aae3180a1114ab88a655b2412ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DEBUG: 0
   prefab: {fileID: 5587668823224020428}
   action: 0
   drinkRange: 5
   eatRange: 5
   timeToEat: 5
   timeToDrink: 5
-  timeToMate: 0
+  timeToMate: 3
   reproductiveUrge: 0
   isPregnant: 0
   pregnancyDuration: 10
-  Desirability: 50
+  age: 0
+  maxEnergy: 100
   energy: 50
+  mass: 1
   speed: 1
   size: 1
   searchRadius: 20

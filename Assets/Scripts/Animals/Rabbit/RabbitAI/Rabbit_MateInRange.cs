@@ -15,11 +15,11 @@ public class Rabbit_MateInRange : Node
 
 	public override NodeState Evaluate()
 	{
-		if(rabbit.action == Animal.Action.MATING)
-		{
-			state = NodeState.SUCCESS;
-			return state;
-		}
+		//if(rabbit.action == Animal.Action.MATING)
+		//{
+		//	state = NodeState.FAILURE;
+		//	return state;
+		//}
 
 		if (rabbit.Mate == null)
 		{
