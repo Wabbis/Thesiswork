@@ -2,33 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
-public class Rabbit_MateInRange : Node
-{
-	private Transform _transform;
-	private Rabbit rabbit;
 
-	public Rabbit_MateInRange(Transform transform)
+public class Fox_MateInRange : Node 
+{ 
+	private Transform _transform;
+	private Fox fox;
+
+	public Fox_MateInRange(Transform transform)
 	{
 		_transform = transform;
-		rabbit = transform.GetComponent<Rabbit>();
+		fox = transform.GetComponent<Fox>();
 	}
 
 	public override NodeState Evaluate()
 	{
 		// Two mates in range somehow???
-		if (rabbit.action == Animal.Action.MATING)
+		if (fox.action == Animal.Action.MATING)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
 
-		if (rabbit.Mate == null)
+
+		if (fox.Mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
 
-		Transform mate = rabbit.Mate.transform;
+
+		Transform mate = fox.Mate.transform;
+
 		if (Vector3.Distance(_transform.position, mate.position) < 1.5f)
 		{
 			state = NodeState.SUCCESS;
@@ -37,6 +41,5 @@ public class Rabbit_MateInRange : Node
 
 		state = NodeState.FAILURE;
 		return state;
-		
 	}
 }

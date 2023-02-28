@@ -3,38 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 using Pathfinding;
-public class Rabbit_SearchForWater : Node
+
+public class Fox_SearchForWater : Node
 {
 	private Transform _transform;
 	private AIPath ai;
 	private LayerMask _waterLayerMask = LayerMask.GetMask("Water");
 	private List<Transform> memory = new List<Transform>();
-	private Rabbit rabbit;
-	public Rabbit_SearchForWater(Transform transform)
+	private Fox fox;
+
+	public Fox_SearchForWater(Transform transform)
 	{
 		_transform = transform;
 		ai = transform.GetComponent<AIPath>();
-		rabbit = _transform.GetComponent<Rabbit>();
+		fox = transform.GetComponent<Fox>();
 	}
 
 	public override NodeState Evaluate()
 	{
-		if (rabbit.thirst < 0.2f || rabbit.action == Animal.Action.EATING || rabbit.action == Animal.Action.MATING) 
+		if (fox.thirst < 0.2f || (fox.action == Animal.Action.EATING && fox.thirst > 0.8f) || fox.action == Animal.Action.MATING)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
 
-		object target = GetData("Water");
+		Transform target = (Transform)GetData("Water");
 
 		if (target == null)
 		{
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
-				rabbit.visionRange,
+				fox.visionRange,
 				_waterLayerMask);
-			if(collider.Length == 0 && rabbit.thirst > 0.8f)
+			if (collider.Length == 0 && fox.thirst > 0.8f)
 			{
-				if(memory.Count == 0)
+				if (memory.Count == 0)
 				{
 					state = NodeState.FAILURE;
 					return state;
@@ -49,20 +51,17 @@ public class Rabbit_SearchForWater : Node
 						distance = Vector3.Distance(transform.position, _transform.position);
 					}
 				}
-
-				Debug.Log("water found from memory");
+				Debug.Log("Water found from memory");
 				parent.parent.SetData("Water", closest);
 				state = NodeState.SUCCESS;
 				return state;
 			}
 
-
-			if(collider.Length > 0)
+			if (collider.Length > 0)
 			{
-				Debug.Log("Water found");
 				Transform closest = null;
 				float closestDistance = float.MaxValue;
-				foreach(Collider col in collider)
+				foreach (Collider col in collider)
 				{
 					float distance = Vector3.Distance(col.transform.position, _transform.position);
 
@@ -84,10 +83,9 @@ public class Rabbit_SearchForWater : Node
 			state = NodeState.RUNNING;
 			return state;
 		}
-
 		state = NodeState.SUCCESS;
 		return state;
 	}
-
-	
 }
+
+

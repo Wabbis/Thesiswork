@@ -16,7 +16,7 @@ using Pathfinding;
             {
                 pointOnNavMesh = hit.position;
             }
-
+			
             return pointOnNavMesh;
         }
 
@@ -36,4 +36,25 @@ using Pathfinding;
 		} while (!randomNode.Walkable);
 		return randomPoint;
 	}
-    }
+
+	public static Vector3 VectorFromAngle(float AngleInDegrees)
+	{
+		float angleInRads = AngleInDegrees * (Mathf.PI / 180f);
+		return new Vector3(Mathf.Sin(angleInRads), 0, Mathf.Cos(angleInRads));
+		
+	}
+
+	public static float AngleFromVector3(Vector3 vector)
+	{
+		vector = vector.normalized;
+
+		float f = Mathf.Atan2(vector.x, vector.z) * Mathf.Rad2Deg;
+		
+		if (f < 0) f += 360;
+
+		Debug.Log("F: " + f + "Vector z: " + vector.z + "Vector x: " + vector.x);
+		return f;
+	}
+
+	
+}

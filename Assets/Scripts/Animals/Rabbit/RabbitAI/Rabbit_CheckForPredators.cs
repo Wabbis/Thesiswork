@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
-public class Rabbit_MateInRange : Node
+
+public class Rabbit_CheckForPredators : Node
 {
 	private Transform _transform;
 	private Rabbit rabbit;
 
-	public Rabbit_MateInRange(Transform transform)
+	public Rabbit_CheckForPredators(Transform transform)
 	{
 		_transform = transform;
 		rabbit = transform.GetComponent<Rabbit>();
@@ -15,28 +16,21 @@ public class Rabbit_MateInRange : Node
 
 	public override NodeState Evaluate()
 	{
-		// Two mates in range somehow???
-		if (rabbit.action == Animal.Action.MATING)
+		if(!rabbit.isHunted)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
 
-		if (rabbit.Mate == null)
+		Transform predator = (Transform)GetData("predator");
+		if (predator == null)
 		{
-			state = NodeState.FAILURE;
-			return state;
-		}
-
-		Transform mate = rabbit.Mate.transform;
-		if (Vector3.Distance(_transform.position, mate.position) < 1.5f)
-		{
+			parent.SetData("predator", rabbit.Predator);
 			state = NodeState.SUCCESS;
 			return state;
 		}
 
-		state = NodeState.FAILURE;
+		state = NodeState.SUCCESS;
 		return state;
-		
 	}
 }

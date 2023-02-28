@@ -8,6 +8,7 @@ TagManager:
   - Sand
   - Grass
   - Rabbit
+  - Fox
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Plant
   - Entities
   - Rabbit
-  - 
+  - Fox
   - 
   - 
   - 

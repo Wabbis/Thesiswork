@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 using Pathfinding;
-
-public class Rabbit_WaterInRange : Node
+public class Fox_WaterInRange : Node
 {
 	private Transform _transform;
 	private AIPath ai;
-	private Rabbit rabbit;
-	public Rabbit_WaterInRange(Transform transform)
+	private Fox fox;
+
+	public Fox_WaterInRange(Transform transform)
 	{
-		
 		_transform = transform;
-		rabbit = transform.GetComponent<Rabbit>();
+		fox = transform.GetComponent<Fox>();
 		ai = transform.GetComponent<AIPath>();
 	}
 
 	public override NodeState Evaluate()
 	{
 		Transform target = (Transform)GetData("Water");
-		if (target == null || rabbit.action == Animal.Action.EATING || rabbit.action == Animal.Action.MATING)
+		if(target == null || fox.action == Animal.Action.EATING || fox.action == Animal.Action.MATING)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
-		if (Vector3.Distance(_transform.position, target.position) < rabbit.drinkRange)
+		if(Vector3.Distance(_transform.position, target.position) < fox.drinkRange)
 		{
 			ai.destination = _transform.position;
 			state = NodeState.SUCCESS;

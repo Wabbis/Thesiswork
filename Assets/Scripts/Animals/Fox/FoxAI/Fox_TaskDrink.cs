@@ -2,50 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
+using Pathfinding;
 
-public class Rabbit_TaskDrink : Node
+public class Fox_TaskDrink : Node
 {
 	private Transform _transform;
 	private float timeCounter = 0f;
-	private Rabbit rabbit;
-	
-	public Rabbit_TaskDrink(Transform transform)
+	private Fox fox;
+
+	public Fox_TaskDrink(Transform transform)
 	{
 		_transform = transform;
-		rabbit = transform.GetComponent<Rabbit>();
+		fox = transform.GetComponent<Fox>();
 	}
 
 	public override NodeState Evaluate()
 	{
 		Transform target = (Transform)GetData("Water");
 
-		if (target == null)
-		{
+		if(target == null || (fox.action == Animal.Action.EATING && fox.thirst < 90))
+		{ 
 			state = NodeState.FAILURE;
 			return state;
 		}
-
-		if (rabbit.action != Animal.Action.MATING)
+		if(fox.action != Animal.Action.MATING)
 		{
-			rabbit.action = Animal.Action.DRINKING;
+			fox.action = Animal.Action.DRINKING;
 
-			if(rabbit.thirst > 0)
+			if(fox.thirst > 0)
 			{
-				rabbit.thirst -= Time.deltaTime * 1 / rabbit.timeToDrink;
-				rabbit.thirst = Mathf.Clamp01(rabbit.thirst);
+				fox.thirst -= Time.deltaTime * 1 / fox.timeToDrink;
+				fox.thirst = Mathf.Clamp01(fox.thirst);
 			}
 			else
 			{
-				rabbit.thirst = 0;
+				fox.thirst = 0f;
 			}
 
 			timeCounter += Time.deltaTime;
-			if(timeCounter > rabbit.timeToDrink)
+			if(timeCounter > fox.timeToDrink)
 			{
-				Debug.Log("Done drinking");
 				timeCounter = 0f;
 				state = NodeState.SUCCESS;
-				rabbit.action = Animal.Action.NONE;
+				fox.action = Animal.Action.NONE;
 				ClearData("Water");
 				return state;
 			}

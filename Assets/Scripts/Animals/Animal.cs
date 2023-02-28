@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Pathfinding;
 
 public class Animal : MonoBehaviour
 {
@@ -15,10 +16,12 @@ public class Animal : MonoBehaviour
 		RUNNING
 	}
 
+	public CauseOfDeath causeOfDeath;
 	public bool DEBUG;
 	public GameObject prefab;
 	protected bool dead = false;
 	public Action action = Action.NONE;
+	public AIPath ai;
 
 	// Eat and drink settings:
 	[Header("Eat and Drink")]
@@ -58,11 +61,18 @@ public class Animal : MonoBehaviour
     public float hunger = 0;
     public float thirst = 0;
 
-	public void Update()
+	public void Awake()
+	{
+		ai = GetComponent<AIPath>();
+		
+	}
+
+	public void Update()  
     {
+		speed = ai.velocity.magnitude;
 		reproductiveUrge += Time.deltaTime;
 		// some fucking algorith
-		energy -= Mathf.Pow(mass, 0.75f)  * Time.deltaTime;
+		energy -= Mathf.Pow(mass, 0.75f) * Time.deltaTime;
 
 		//energy -= mass;
 		age += Time.deltaTime;
@@ -71,20 +81,21 @@ public class Animal : MonoBehaviour
 		
 		if(energy > maxEnergy) energy = maxEnergy;
 
-		if (hunger >= 100) Die();
-        if (thirst >= 100) Die();
-		if (energy <= 0) Die();
-		if (age > 120f) Die();
-    }
+		if (hunger >= 100) Die(CauseOfDeath.STARVING);
+		if (thirst >= 100) Die(CauseOfDeath.THIRST);
+		if (age > 120f) Die(CauseOfDeath.AGE);
+	}
 
-    protected void Die()
-    {
-        if (!dead)
-        {
-		    dead = true;
-            Destroy(gameObject);
-        }
-    }
+	protected void Die(CauseOfDeath cod)
+	{
+		if (!dead)
+		{
+			causeOfDeath = cod;
+			dead = true;
+			GameManager.Instance.Remove(this);
+			ai.enabled = false;
+		}
+   }
 
 	private void OnDrawGizmosSelected()
 	{
@@ -97,12 +108,7 @@ public class Animal : MonoBehaviour
 			Vector3 fromVector = Quaternion.AngleAxis(-0.5f * fieldOfViewAngle, Vector3.up) * transform.forward;
 			Handles.DrawSolidArc(transform.position, Vector3.up, fromVector, fieldOfViewAngle, visionRange);
 		}
-		
 	}
-
-	
-
-
 }
 
 

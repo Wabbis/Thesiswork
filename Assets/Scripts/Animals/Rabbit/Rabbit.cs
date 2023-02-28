@@ -2,13 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[UnityEngine.RequireComponent(typeof(Genes))]
 public class Rabbit : Animal
 {
 	public Rabbit mate;
 
 	public Color maleColor;
 	public Color femaleColor;
+
+	public bool isHunted;
+	public Transform Predator;
+
+	public void SetPredator(Transform predator)
+	{
+		isHunted = true;
+		Predator = predator;
+	}
+
+	public void ClearPredator()
+	{
+		isHunted = false;
+		Predator = null;
+	}
 
 	public Genes genes;
 	public Rabbit Mate
@@ -26,7 +41,8 @@ public class Rabbit : Animal
 
 	public void Start()
 	{
-	
+		isHunted = false;
+
 		Debug.Log("Animal gender: " + genes.gender);
 		if (genes.gender == Genes.Gender.MALE)
 		{
@@ -134,11 +150,12 @@ public class Rabbit : Animal
 		yield return new WaitForSeconds(2);
 		GameObject child = Resources.Load("Animals/Rabbit") as GameObject;
 		GameObject newChild = Instantiate(child);
+		GameManager.Instance.AddRabbit(newChild.GetComponent<Rabbit>());
 		newChild.GetComponent<Rabbit>().genes.InheritedGenes(genes, father.genes);
 		newChild.transform.position = transform.position;
 		newChild.transform.Rotate(new Vector3(child.transform.rotation.x, 
 			Random.rotation.eulerAngles.y,
-			child.transform.rotation.x));
+			child.transform.rotation.z));
 
 		speed = tempSpeed;
 	}
