@@ -70,8 +70,11 @@ public class Animal : MonoBehaviour
 	public void Update()  
     {
 		speed = ai.velocity.magnitude;
+		
 		reproductiveUrge += Time.deltaTime;
 		// some fucking algorith
+		
+		// float energyConsuption = Mathf.Pow(mass, 0.75f) + (0.5f * speed);
 		energy -= Mathf.Pow(mass, 0.75f) * Time.deltaTime;
 
 		//energy -= mass;
