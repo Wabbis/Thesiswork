@@ -19,7 +19,7 @@ public class Rabbit_SearchForWater : Node
 
 	public override NodeState Evaluate()
 	{
-		if (rabbit.thirst < 0.2f || rabbit.action == Animal.Action.EATING || rabbit.action == Animal.Action.MATING) 
+		if (rabbit.thirst < rabbit.drinkingThreshold || rabbit.action == Animal.Action.EATING || rabbit.action == Animal.Action.MATING) 
 		{
 			state = NodeState.FAILURE;
 			return state;

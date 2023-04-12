@@ -16,24 +16,18 @@ public class Fox_MateInRange : Node
 
 	public override NodeState Evaluate()
 	{
-		// Two mates in range somehow???
-		if (fox.action == Animal.Action.MATING)
-		{
-			state = NodeState.FAILURE;
-			return state;
-		}
-
-
 		if (fox.Mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;
 		}
 
-
+		Debug.Log("?=");
 		Transform mate = fox.Mate.transform;
+		// TODO better value to compare against
 
-		if (Vector3.Distance(_transform.position, mate.position) < 1.5f)
+		Debug.Log(Vector3.Distance(_transform.position, mate.position));
+		if (Vector3.Distance(_transform.position, mate.position) < 2.5f )
 		{
 			state = NodeState.SUCCESS;
 			return state;

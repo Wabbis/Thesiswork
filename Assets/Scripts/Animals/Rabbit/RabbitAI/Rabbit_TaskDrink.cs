@@ -32,7 +32,7 @@ public class Rabbit_TaskDrink : Node
 			if(rabbit.thirst > 0)
 			{
 				rabbit.thirst -= Time.deltaTime * 1 / rabbit.timeToDrink;
-				rabbit.thirst = Mathf.Clamp01(rabbit.thirst);
+				
 			}
 			else
 			{

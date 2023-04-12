@@ -5,4 +5,5 @@ public enum CauseOfDeath
 	STARVING,
 	THIRST,
 	AGE,
+	EXHAUSTION,
 }

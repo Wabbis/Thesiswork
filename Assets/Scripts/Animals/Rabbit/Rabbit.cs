@@ -5,7 +5,13 @@ using UnityEngine;
 [UnityEngine.RequireComponent(typeof(Genes))]
 public class Rabbit : Animal
 {
+	private Species species = Species.RABBIT;
+	public Species Get()
+	{
+		return species;
+	}
 	public Rabbit mate;
+	private MeshRenderer mesh;
 
 	public Color maleColor;
 	public Color femaleColor;
@@ -42,26 +48,30 @@ public class Rabbit : Animal
 	public void Start()
 	{
 		isHunted = false;
-
+		mesh = transform.Find("Mesh").GetComponent<MeshRenderer>();
 		Debug.Log("Animal gender: " + genes.gender);
 		if (genes.gender == Genes.Gender.MALE)
 		{
-			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = maleColor;
+			mesh.material.color = maleColor;
 		}
 		else
 		{
-			transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = femaleColor;
+			mesh.material.color = femaleColor;
 		}
 
 	}
 
 	public void InitGenes()
 	{
-		size *= genes.values[0];
-		speed *= genes.values[1];
-
-
-
+		ChangeSize(genes.attributes[0].value);
+		walkSpeed = genes.attributes[1].value;
+		runSpeed = genes.attributes[2].value;
+		visionRange = genes.attributes[3].value;
+		fieldOfViewAngle = genes.attributes[4].value;
+		eatingThreshold = genes.attributes[5].value;
+		drinkingThreshold = genes.attributes[6].value;
+		matingThreshold = genes.attributes[7].value;
+		gestationTime = genes.attributes[8].value;
 	}
 
 	// Male only
@@ -137,7 +147,7 @@ public class Rabbit : Animal
 	public void GetPregnant(Rabbit father)
 	{
 		isPregnant = true;
-		StartCoroutine(Gestation(pregnancyDuration, father));
+		StartCoroutine(Gestation(gestationTime, father));
 
 	}
 
@@ -145,8 +155,8 @@ public class Rabbit : Animal
 	{
 		yield return new WaitForSeconds(time);
 		isPregnant = false;
-		var tempSpeed = speed;
-		speed = 0;
+		var tempSpeed = walkSpeed;
+		walkSpeed = 0;
 		yield return new WaitForSeconds(2);
 		GameObject child = Resources.Load("Animals/Rabbit") as GameObject;
 		GameObject newChild = Instantiate(child);
@@ -157,6 +167,6 @@ public class Rabbit : Animal
 			Random.rotation.eulerAngles.y,
 			child.transform.rotation.z));
 
-		speed = tempSpeed;
+		walkSpeed = tempSpeed;
 	}
 }

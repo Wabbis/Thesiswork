@@ -19,7 +19,7 @@ public class Fox_TaskMate : Node
 
 	public override NodeState Evaluate()
 	{
-		if(fox.Mate == null)
+		if (fox.Mate == null)
 		{
 			state = NodeState.FAILURE;
 			return state;

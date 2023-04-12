@@ -22,7 +22,7 @@ public class Animal : MonoBehaviour
 	protected bool dead = false;
 	public Action action = Action.NONE;
 	public AIPath ai;
-
+	
 	// Eat and drink settings:
 	[Header("Eat and Drink")]
 	public float drinkRange;
@@ -36,28 +36,40 @@ public class Animal : MonoBehaviour
 	public float reproductiveUrge;  
 	// Female only
 	public bool isPregnant = false;
-	public float pregnancyDuration = 10f;
-
+	public float gestationTime = 10f;
 	// Male only
 	// NYI : public float Desirability = 100f; // Values from 0.1 to 100 male only, 0 for female
 
 	// General settings:
 	[Header("General")]
 	public float age = 0;
-	public float maxEnergy;
-	public float energy;
-	public float mass;
-    public float speed;
-    public float size;
-    public float searchRadius;
-    public float visionRange;
-    public float fieldOfViewAngle;
+	public float maxEnergy; // affected by size?
+	public float energy; 
+	public float mass; // is affected by genes
+    public float walkSpeed; // is affected by genes
+	public float runSpeed; // is affected by genes
+	public float size; // is affected by genes
+	public void ChangeSize(float newSize)
+	{
+		size = newSize;
+		transform.localScale = new Vector3(size, size, size);
+	}
+	public float searchRadius; // is affected by genes
+	public float visionRange; // is affected by genes
+	public float fieldOfViewAngle; // is affected by genes
 
-	// Death settings:
-    public float timeToDieByStarving;
-    public float timeToDieByThirst;
+	[Header("Thresholds")]
+	public float drinkingThreshold; // is affected by genes
+	public float eatingThreshold; // is affected by genes
+	public float matingThreshold; // is affected by genes
 
-    [Header("State")]
+
+
+	[Header("Death settings")]
+	public AnimationCurve oddToDieByAge;
+	public float timeToDieByStarving;
+	public float timeToDieByThirst; 
+	[Header("State")]
     public float hunger = 0;
     public float thirst = 0;
 
@@ -69,21 +81,26 @@ public class Animal : MonoBehaviour
 
 	public void Update()  
     {
-		speed = ai.velocity.magnitude;
+		walkSpeed = ai.velocity.magnitude;
 		
 		reproductiveUrge += Time.deltaTime;
+		if(reproductiveUrge > 100)
+		{
+			reproductiveUrge = 100;
+		}
 		// some fucking algorith
 		
-		// float energyConsuption = Mathf.Pow(mass, 0.75f) + (0.5f * speed);
-		energy -= Mathf.Pow(mass, 0.75f) * Time.deltaTime;
+		// float energyConsuption = Mathf.Pow(size, 0.75f) + (0.5f * speed);
+		energy -= Mathf.Pow(size, 0.75f) * Time.deltaTime;
 
 		//energy -= mass;
 		age += Time.deltaTime;
-		hunger += Time.deltaTime / timeToDieByStarving;
-		thirst += Time.deltaTime / timeToDieByThirst;
+		hunger += Time.deltaTime * (.2f / energy);
+		thirst += Time.deltaTime * (.2f / energy);
 		
 		if(energy > maxEnergy) energy = maxEnergy;
 
+		if (energy <= 0) Die(CauseOfDeath.EXHAUSTION);
 		if (hunger >= 100) Die(CauseOfDeath.STARVING);
 		if (thirst >= 100) Die(CauseOfDeath.THIRST);
 		if (age > 120f) Die(CauseOfDeath.AGE);

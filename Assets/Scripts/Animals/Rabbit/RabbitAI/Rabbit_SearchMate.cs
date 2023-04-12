@@ -38,7 +38,7 @@ public class Rabbit_SearchMate : Node
 			}
 		}
 		
-		if (rabbit.Mate == null && rabbit.reproductiveUrge > 25 && rabbit.genes.gender == Genes.Gender.MALE)
+		if (rabbit.Mate == null && rabbit.reproductiveUrge > rabbit.matingThreshold && rabbit.genes.gender == Genes.Gender.MALE)
 		{
 			Debug.Log("Searching for mate");
 			int oldLayer = rabbit.gameObject.layer;

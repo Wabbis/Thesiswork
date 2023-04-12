@@ -10,11 +10,12 @@ public class Fox : Animal
 
 	public Color maleColor;
 	public Color femaleColor;
+	public Color mouseoverColor;
 
 	public float huntSpeed;
 	public float normalSpeed;
 
-	public bool hasPrey;
+	public bool hasPrey = false;
 
 	public Genes genes;
 
@@ -42,16 +43,17 @@ public class Fox : Animal
 	private float timeToForget = 5;
 	public List<Fox> rejections;
 
-	public void Start()
-	{
-		hasPrey = false;
-		// TODO: Apply gender colors	
-	}
-
 	public void InitGenes()
 	{
-		size *= genes.values[0];
-		speed *= genes.values[0];
+		ChangeSize(genes.attributes[0].value);
+		walkSpeed = genes.attributes[1].value;
+		runSpeed = genes.attributes[2].value;
+		visionRange = genes.attributes[3].value;
+		fieldOfViewAngle = genes.attributes[4].value;
+		eatingThreshold = genes.attributes[5].value;
+		drinkingThreshold = genes.attributes[6].value;
+		matingThreshold = genes.attributes[7].value;
+		gestationTime = genes.attributes[8].value;
 	}
 
 	// Male only
@@ -62,7 +64,7 @@ public class Fox : Animal
 			return false;
 
 		}
-
+		Debug.Log("Requesting...");
 		bool accepted = mate.RequestMate(this);
 		if(accepted)
 		{
@@ -101,12 +103,15 @@ public class Fox : Animal
 	{
 		if(isPregnant || reproductiveUrge < 25 || action != Action.NONE)
 		{
+			Debug.Log("Rejected");
 			return false;
+
 		}
 		if(reproductiveUrge > thirst && reproductiveUrge > hunger)
 		{
 			if (this.mate == null)
 			{
+				Debug.Log("Accepted");
 				action = Action.MATING;
 				this.mate = mate;
 				return true;
@@ -118,25 +123,28 @@ public class Fox : Animal
 	public void GetPregnant(Fox father)
 	{
 		isPregnant = true;
-		StartCoroutine(Gestation(pregnancyDuration, father));
+		StartCoroutine(Gestation(gestationTime, father));
 	}
 
 	private IEnumerator Gestation(float time, Fox father)
 	{
 		yield return new WaitForSeconds(time);
 		isPregnant = false;
-		var tempSpeed = speed;
-		speed = 0;
+		var tempSpeed = walkSpeed;
+		walkSpeed = 0;
 		yield return new WaitForSeconds(2);
 		GameObject child = Resources.Load("Animals/Fox") as GameObject;
 		GameObject newChild = Instantiate(child);
+		newChild.GetComponent<Fox>().InitGenes();
 		GameManager.Instance.AddFox(newChild.GetComponent<Fox>());
 		newChild.GetComponent<Fox>().genes.InheritedGenes(genes, father.genes);
 		newChild.transform.position = transform.position;
+
 		newChild.transform.Rotate(new Vector3(child.transform.rotation.x,
 			Random.rotation.eulerAngles.y,
 			child.transform.rotation.z));
 
-		speed = tempSpeed;
+
+		walkSpeed = tempSpeed;
 	}
 }

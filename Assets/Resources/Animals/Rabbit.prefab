@@ -136,9 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a834aae3180a1114ab88a655b2412ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  causeOfDeath: 0
   DEBUG: 0
   prefab: {fileID: 5587668823224020428}
   action: 0
+  ai: {fileID: 0}
   drinkRange: 5
   eatRange: 5
   timeToEat: 5
@@ -146,16 +148,26 @@ MonoBehaviour:
   timeToMate: 3
   reproductiveUrge: 0
   isPregnant: 0
-  pregnancyDuration: 10
+  gestationTime: 10
   age: 0
   maxEnergy: 100
   energy: 50
   mass: 1
-  speed: 1
+  walkSpeed: 0
+  runSpeed: 0
   size: 1
   searchRadius: 20
   visionRange: 20
   fieldOfViewAngle: 90
+  drinkingThreshold: 0
+  eatingThreshold: 0
+  matingThreshold: 0
+  oddToDieByAge:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   timeToDieByStarving: 100
   timeToDieByThirst: 100
   hunger: 0
@@ -194,18 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 1
-  values:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  femaleValues:
-  - 1
-  - 1
-  maleValues:
-  - 1
-  - 1
+  attributes: []
 --- !u!135 &-8725467677707324024
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -246,7 +247,8 @@ GameObject:
   - component: {fileID: 5587668824006035308}
   - component: {fileID: 5587668824006035296}
   - component: {fileID: 5587668824006035301}
-  m_Layer: 2
+  - component: {fileID: 8271730619917724680}
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,3 +363,17 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: aa0e1558836cb5d45bac9dabfe4af7cd, type: 3}
+--- !u!114 &8271730619917724680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5587668824006035310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0418942866e1adb49b0900f206976d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI: {fileID: 0}
+  mouseoverColor: {r: 0.8, g: 0.654902, b: 0.654902, a: 0}

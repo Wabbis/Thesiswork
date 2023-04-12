@@ -44,6 +44,7 @@ public class Fox_SearchMate : Node
 			Debug.Log("Searching for mate");
 			// chance own layer to avoid self-search
 			int oldLayer = fox.gameObject.layer;
+			// layer 2 = Ignore raycast
 			fox.gameObject.layer = 2;
 
 			Collider[] collider = Physics.OverlapSphere(_transform.position,

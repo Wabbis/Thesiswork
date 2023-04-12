@@ -19,6 +19,7 @@ public class Fox_TaskMoveToMate : Node
 
 	public override NodeState Evaluate()
 	{
+		
 		Transform mate = fox.Mate.transform;
 
 		if(mate == null)
@@ -26,11 +27,11 @@ public class Fox_TaskMoveToMate : Node
 			state = NodeState.FAILURE;
 			return state;
 		}
-
 		fox.action = Animal.Action.MATING;
-		ai.destination = mate.position;
-		if(ai.reachedDestination)
+		ai.destination = mate.position; 
+		if (Vector3.Distance(_transform.position, mate.position) < 2.5f)
 		{
+			Debug.Log("??");
 			state = NodeState.SUCCESS;
 			return state;
 		}

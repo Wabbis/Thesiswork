@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
 		{CauseOfDeath.EATEN, 0 },
 		{CauseOfDeath.STARVING, 0 },
 		{CauseOfDeath.THIRST, 0 },
-		{CauseOfDeath.AGE, 0 }
+		{CauseOfDeath.AGE, 0 },
+		{CauseOfDeath.EXHAUSTION, 0}
 	};
 
 	private Dictionary<CauseOfDeath, int> listOfFoxDeaths = new Dictionary<CauseOfDeath, int>()
@@ -43,7 +44,8 @@ public class GameManager : MonoBehaviour
 		{CauseOfDeath.EATEN, 0 },
 		{CauseOfDeath.STARVING, 0 },
 		{CauseOfDeath.THIRST, 0 },
-		{CauseOfDeath.AGE, 0 }
+		{CauseOfDeath.AGE, 0 },
+		{CauseOfDeath.EXHAUSTION, 0}
 	};
 
 
@@ -52,13 +54,20 @@ public class GameManager : MonoBehaviour
     {
 		if (listOfRabbitDeaths == null) listOfRabbitDeaths = new Dictionary<CauseOfDeath, int>();
 		if (listOfFoxDeaths == null) listOfFoxDeaths = new Dictionary<CauseOfDeath, int>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		
+		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Fox")) {
+			AddFox(obj.GetComponent<Fox>());
+			obj.GetComponent<Fox>().InitGenes();
+		}
+
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Rabbit"))
+		{
+			AddRabbit(obj.GetComponent<Rabbit>());
+			obj.GetComponent<Rabbit>().InitGenes();
+		}
+
+	}
 
 	/* Add animals */
 	public void AddRabbit(Rabbit rabbit)
@@ -81,7 +90,9 @@ public class GameManager : MonoBehaviour
 	/* Remove animals */
 
 	public void Remove(Animal animal) 
-	{ 
+	{
+		if (UIController.Instance.selectedUnit == animal.gameObject) UIController.Instance.DisableUI();
+
 		if(animal.GetComponent<Fox>())
 		{
 			RemoveFox(animal.GetComponent<Fox>(), animal.causeOfDeath);
@@ -100,6 +111,7 @@ public class GameManager : MonoBehaviour
 		{
 			rabbits.Remove(rabbit);
 			listOfRabbitDeaths[cod]++;
+			Destroy(rabbit.gameObject);
 			Debug.Log(rabbit + " removed from the list");
 		}
 	}

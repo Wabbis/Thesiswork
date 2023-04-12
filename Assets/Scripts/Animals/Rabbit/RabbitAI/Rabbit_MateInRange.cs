@@ -15,12 +15,6 @@ public class Rabbit_MateInRange : Node
 
 	public override NodeState Evaluate()
 	{
-		// Two mates in range somehow???
-		if (rabbit.action == Animal.Action.MATING)
-		{
-			state = NodeState.FAILURE;
-			return state;
-		}
 
 		if (rabbit.Mate == null)
 		{
