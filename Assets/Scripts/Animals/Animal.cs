@@ -95,8 +95,9 @@ public class Animal : MonoBehaviour
 
 		//energy -= mass;
 		age += Time.deltaTime;
-		hunger += Time.deltaTime * (.2f / energy);
-		thirst += Time.deltaTime * (.2f / energy);
+		hunger += Time.deltaTime * 1f;
+		thirst += Time.deltaTime * 1f;
+		
 		
 		if(energy > maxEnergy) energy = maxEnergy;
 

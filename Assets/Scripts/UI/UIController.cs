@@ -93,27 +93,31 @@ public class UIController : MonoBehaviour
 			texts[i].Find("Attribute Name").GetComponent<TMP_Text>().text = selectedUnit.GetComponent<Genes>().attributes[i].name;
 		}
 	}
-
+	
 	public void SetStatus()
 {
-		var slider = statuses[0].Find("StatusSlider").GetComponent<Slider>();
+		var slider = statuses[1].Find("StatusSlider").GetComponent<Slider>();
 		var animal = selectedUnit.GetComponent<Animal>();
+		// Age
+		statuses[0].Find("Value").GetComponent<TMP_Text>().text = Mathf.Round(animal.age).ToString();
 		// Energy
 		slider.maxValue = animal.maxEnergy;
 		slider.value = animal.energy;
 		slider.transform.Find("Value").GetComponent<TMP_Text>().text = Mathf.Round(slider.value).ToString();
 		// Hunger
-		slider = statuses[1].Find("StatusSlider").GetComponent<Slider>();
+		slider = statuses[2].Find("StatusSlider").GetComponent<Slider>();
 		slider.value = animal.hunger;
 		slider.transform.Find("Value").GetComponent<TMP_Text>().text = Mathf.Round(slider.value).ToString();
 		// Thirst
-		slider = statuses[2].Find("StatusSlider").GetComponent<Slider>();
+		slider = statuses[3].Find("StatusSlider").GetComponent<Slider>();
 		slider.value = animal.thirst;
 		slider.transform.Find("Value").GetComponent<TMP_Text>().text = Mathf.Round(slider.value).ToString();
 		// Reproduction
-		slider = statuses[3].Find("StatusSlider").GetComponent<Slider>();
+		slider = statuses[4].Find("StatusSlider").GetComponent<Slider>();
 		slider.value = animal.reproductiveUrge;
 		slider.transform.Find("Value").GetComponent<TMP_Text>().text = Mathf.Round(slider.value).ToString();
+		// Current Action
+		statuses[5].Find("ActionName").GetComponent<TMP_Text>().text = animal.action.ToString();
 
 	}
 

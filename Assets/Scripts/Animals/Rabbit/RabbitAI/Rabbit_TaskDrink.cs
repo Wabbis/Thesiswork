@@ -31,12 +31,15 @@ public class Rabbit_TaskDrink : Node
 
 			if(rabbit.thirst > 0)
 			{
-				rabbit.thirst -= Time.deltaTime * 1 / rabbit.timeToDrink;
+				rabbit.thirst -= 100 * Time.deltaTime / rabbit.timeToDrink;
 				
 			}
 			else
 			{
 				rabbit.thirst = 0;
+				state = Stop();
+				return state;
+
 			}
 
 			timeCounter += Time.deltaTime;
@@ -51,6 +54,16 @@ public class Rabbit_TaskDrink : Node
 			}
 		}
 		state = NodeState.RUNNING;
+		return state;
+	}
+
+	private NodeState Stop()
+	{
+		Debug.Log("Done drinking");
+		timeCounter = 0f;
+		state = NodeState.SUCCESS;
+		rabbit.action = Animal.Action.NONE;
+		ClearData("Water");
 		return state;
 	}
 }

@@ -30,11 +30,8 @@ public class Rabbit_TaskEat : Node
 
 			if (rabbit.hunger > 0)
 			{
-				float amount = Mathf.Min(rabbit.hunger, 
-					Time.deltaTime * 1 / rabbit.timeToEat
-					);
-				rabbit.hunger -= amount;
-				rabbit.energy += rabbit.timeToEat / 50; // test value
+				rabbit.hunger -= 100 * Time.deltaTime / rabbit.timeToDrink;
+				rabbit.energy += 100* Time.deltaTime / rabbit.timeToEat; // test value
 			}
 			else
 			{

@@ -153,15 +153,15 @@ MonoBehaviour:
   maxEnergy: 100
   energy: 50
   mass: 1
-  walkSpeed: 0
-  runSpeed: 0
+  walkSpeed: 1
+  runSpeed: 3
   size: 1
   searchRadius: 20
   visionRange: 20
   fieldOfViewAngle: 90
-  drinkingThreshold: 0
-  eatingThreshold: 0
-  matingThreshold: 0
+  drinkingThreshold: 30
+  eatingThreshold: 30
+  matingThreshold: 30
   oddToDieByAge:
     serializedVersion: 2
     m_Curve: []

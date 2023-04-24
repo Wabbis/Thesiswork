@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.AI.Navigation;
+using Pathfinding;
 
-
+[SelectionBase]
 public class MapGeneration : MonoBehaviour
 {
 	public Renderer texRender;
@@ -14,7 +15,6 @@ public class MapGeneration : MonoBehaviour
 
 	public int mapHeight;
 	public float scale;
-	public bool autoUpdate;
 
 	public RegionType[] regions;
 
@@ -25,12 +25,16 @@ public class MapGeneration : MonoBehaviour
 	public void GenerateMap()
 	{
 		float[,] noiseMap = NoiseMap.CreateNoiseMap(mapWidth, mapHeight, scale);
+		AstarData data = AstarData.active.data;
+		GridGraph gg = data.gridGraph;
+		gg.center = new Vector3((Mathf.Round(mapWidth*5) / 2 - 2.5f)  , 0, Mathf.Round((mapHeight*5) / 2 -2.5f ));
+		gg.SetDimensions(mapWidth, mapHeight, gg.nodeSize);
 		//DrawNoiseMap(noiseMap);
 		DrawColorMap(noiseMap);
 	}
 	public void DrawColorMap(float[,] noiseMap)
 	{
-		
+		Transform parent = transform.Find("Map").transform;
 		Color[] colorMap = new Color[mapWidth * mapHeight];
 
 		for (int y = 0; y < mapHeight; y++)
@@ -46,7 +50,7 @@ public class MapGeneration : MonoBehaviour
 						// colorMap[y * mapWidth + x] = regions[i].color;
 
 						GameObject tile = Instantiate(regions[i].prefab, new Vector3(x*5, 0, y*5), Quaternion.identity);
-						
+						tile.transform.parent = parent;
 						listOfMapObjects.Add(tile);
 						break;
 					}
@@ -60,7 +64,7 @@ public class MapGeneration : MonoBehaviour
 		tex.Apply();
 		Debug.Log("Color map done");
 		texRender.sharedMaterial.mainTexture = tex;
-		texRender.transform.localScale = new Vector3(mapWidth, 1, mapHeight);
+		// texRender.transform.localScale = new Vector3(mapWidth, 1, mapHeight);
 
 		//	Debug.Log("----");
 		//	for (int y = 0; y < mapHeight; y++)
