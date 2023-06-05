@@ -45,7 +45,7 @@ public class Rabbit_TaskDrink : Node
 			timeCounter += Time.deltaTime;
 			if(timeCounter > rabbit.timeToDrink)
 			{
-				Debug.Log("Done drinking");
+				
 				timeCounter = 0f;
 				state = NodeState.SUCCESS;
 				rabbit.action = Animal.Action.NONE;

@@ -30,7 +30,7 @@ public class Rabbit_TaskEat : Node
 
 			if (rabbit.hunger > 0)
 			{
-				rabbit.hunger -= 100 * Time.deltaTime / rabbit.timeToDrink;
+				rabbit.hunger -= 100 * Time.deltaTime / rabbit.timeToEat;
 				rabbit.energy += 100* Time.deltaTime / rabbit.timeToEat; // test value
 			}
 			else
@@ -41,7 +41,7 @@ public class Rabbit_TaskEat : Node
 			timeCounter += Time.deltaTime;
 			if (timeCounter > rabbit.timeToEat)
 			{
-				Debug.Log("Plant eaten");
+				
 				Object.Destroy(target.gameObject);
 				timeCounter = 0f;
 				state = NodeState.SUCCESS;

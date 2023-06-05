@@ -77,26 +77,26 @@ public class Rabbit : Animal
 	// Male only
 	public bool PotentialMate(Rabbit mate) 
 	{
-		Debug.Log("Potential mate is: " + mate);
+		
 
 		if (rejections.Contains(mate))
 		{
-			Debug.Log("Already rejected");
+			
 			return false;
 			
 		}
 		bool accepted = mate.RequestMate(this);
-		Debug.Log("mate requested...");
+		
 		if (accepted)
 		{
-			Debug.Log("Accepted");
+			
 			action = Action.MATING;
 			SetMate(mate);
 			return true;
 		}
 		else
 		{
-			Debug.Log("rejected");
+			
 			AddRejection(mate);
 			StartCoroutine(RemoveRejection(timeToForget,mate));
 			return false;
@@ -105,14 +105,14 @@ public class Rabbit : Animal
 
 	private void AddRejection(Rabbit mate)
 	{
-		Debug.Log("Rejection added");
+		
 		rejections.Add(mate);
 		
 	}
 
 	private IEnumerator RemoveRejection(float time, Rabbit mate)
 	{
-		Debug.Log("Rejected removed in " + time);
+		
 		yield return new WaitForSeconds(time);
 		rejections.Remove(mate);
 	}

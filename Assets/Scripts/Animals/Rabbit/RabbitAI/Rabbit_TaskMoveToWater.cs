@@ -27,10 +27,10 @@ public class Rabbit_TaskMoveToWater : Node
 		
 		GraphNode closestNode = AstarPath.active.GetNearest(target.position).node;
 		ai.destination = closestNode.RandomPointOnSurface();
-		if (ai.reachedEndOfPath)
+		if (ai.remainingDistance < 2)
 		{
-			Debug.Log("Water reached");
-			ai.destination = _transform.position;
+			
+			// ai.destination = _transform.position;
 			state = NodeState.SUCCESS;
 			return state;
 		}

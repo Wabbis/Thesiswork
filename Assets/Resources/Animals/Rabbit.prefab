@@ -119,10 +119,10 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
-  endReachedDistance: 0.2
+  endReachedDistance: 2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 1
+  whenCloseToDestination: 0
   constrainInsideGraph: 0
 --- !u!114 &5587668823224020422
 MonoBehaviour:
@@ -147,24 +147,62 @@ MonoBehaviour:
   timeToDrink: 5
   timeToMate: 3
   reproductiveUrge: 0
+  urgeMultiplier: 2
   isPregnant: 0
   gestationTime: 10
   age: 0
+  ageingSpeed: 0.2
   maxEnergy: 100
-  energy: 50
-  mass: 1
+  energy: 100
+  mass: 2
   walkSpeed: 1
-  runSpeed: 3
-  size: 1
-  searchRadius: 20
-  visionRange: 20
+  runSpeed: 5
+  size: 2
+  searchRadius: 50
+  visionRange: 50
   fieldOfViewAngle: 90
   drinkingThreshold: 30
   eatingThreshold: 30
   matingThreshold: 30
   oddToDieByAge:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 64.22094
+      value: 0.7362385
+      inSlope: 0.090229645
+      outSlope: 0.090229645
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19587554
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 88.121635
+      value: 20.995586
+      inSlope: 2.165895
+      outSlope: 2.165895
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.34663647
+      outWeight: 0.6111473
+    - serializedVersion: 3
+      time: 100
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

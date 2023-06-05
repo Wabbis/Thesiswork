@@ -40,7 +40,7 @@ public class FieldOfView : MonoBehaviour
 
 		Collider[] colliders = Physics.OverlapSphere(transform.position, viewDistance, layermask);
 		
-		Debug.Log("collider lenght: " + colliders.Length);
+		
 
 		if (colliders.Length != 0)
 		{
@@ -51,7 +51,7 @@ public class FieldOfView : MonoBehaviour
 			{
 				if (Vector3.Distance(transform.position, target.position) < viewDistance)
 				{
-					Debug.Log("collider in sight");
+					
 					if (gameObject.tag == "Rabbit") GetComponent<Rabbit>().SetPredator(target);
 					if (gameObject.tag == "Fox") GetComponent<Fox>().hasPrey = true;
 

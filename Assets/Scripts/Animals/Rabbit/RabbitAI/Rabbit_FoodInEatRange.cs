@@ -24,7 +24,7 @@ public class Rabbit_FoodInEatRange : Node
         
         if (Vector3.Distance(_transform.position, target.position) < rabbit.eatRange)
         {
-            Debug.Log("Food in range");
+            
             state = NodeState.SUCCESS;
             return state;
         }

@@ -34,7 +34,8 @@ public class Rabbit_SearchForFood : Node
 
             if(collider.Length > 0)
             {
-                Debug.Log("Food found");
+                
+				collider[0].transform.GetComponent<Plant>().AddTarget(_transform);
                 parent.parent.SetData("Food", collider[0].transform);
                 state = NodeState.SUCCESS;
                 return state;

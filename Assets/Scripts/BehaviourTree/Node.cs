@@ -41,7 +41,7 @@ namespace BehaviourTree
         public void SetData(string key, object value)
         {
             _sharedData[key] = value;
-            UnityEngine.Debug.Log("Object added to dictionary with key: " + key + " and value: " + value);
+            // UnityEngine.Debug.Log("Object added to dictionary with key: " + key + " and value: " + value);
         }
 
         public object GetData(string key)

@@ -19,6 +19,21 @@ using Pathfinding;
 			
             return pointOnNavMesh;
         }
+	
+	public static Vector3 FindPointAroundTransform(Transform transform, float radius)
+	{
+		Vector3 randomPoint = Vector3.zero;
+		do
+		{
+			Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+			randomPoint = randomDirection + transform.position;
+			randomPoint.y = 1;
+
+		} while (!Physics.Raycast(randomPoint, Vector3.down, 2, LayerMask.GetMask("Grass")));
+
+		randomPoint.y = 0;
+		return randomPoint;
+	}
 
 	public static Vector3 FindRandomNodeOnAstarGrid(Transform transform, float radius)
 	{
@@ -37,24 +52,41 @@ using Pathfinding;
 		return randomPoint;
 	}
 
+	public static Vector3 FindRandomNodeOnAstarGrid(float radius)
+	{
+		Vector3 randomPoint = Vector3.zero;
+		GraphNode randomNode;
+		do
+		{
+			Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+			
+			randomNode = AstarPath.active.GetNearest(randomDirection).node;
+			if (randomNode.Walkable)
+			{
+				randomPoint = randomNode.RandomPointOnSurface(); 
+			}
+		} while (!randomNode.Walkable);
+		return randomPoint;
+	}
+
 	public static Vector3 VectorFromAngle(float AngleInDegrees)
-	{
-		float angleInRads = AngleInDegrees * (Mathf.PI / 180f);
-		return new Vector3(Mathf.Sin(angleInRads), 0, Mathf.Cos(angleInRads));
+		{
+			float angleInRads = AngleInDegrees * (Mathf.PI / 180f);
+			return new Vector3(Mathf.Sin(angleInRads), 0, Mathf.Cos(angleInRads));
 		
-	}
+		}
 
-	public static float AngleFromVector3(Vector3 vector)
-	{
-		vector = vector.normalized;
+		public static float AngleFromVector3(Vector3 vector)
+		{
+			vector = vector.normalized;
 
-		float f = Mathf.Atan2(vector.x, vector.z) * Mathf.Rad2Deg;
+			float f = Mathf.Atan2(vector.x, vector.z) * Mathf.Rad2Deg;
 		
-		if (f < 0) f += 360;
+			if (f < 0) f += 360;
 
-		Debug.Log("F: " + f + "Vector z: " + vector.z + "Vector x: " + vector.x);
-		return f;
-	}
+			Debug.Log("F: " + f + "Vector z: " + vector.z + "Vector x: " + vector.x);
+			return f;
+		}
 
 	
 }

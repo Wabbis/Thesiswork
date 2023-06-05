@@ -16,7 +16,7 @@ public class Genes : MonoBehaviour
 	}
 
 	const float mutationChance = 50f;
-	const float maxMutation = 0.2f;
+	const float maxMutation = 5f;
 	static readonly System.Random rand = new System.Random();
 	
 	/// <summary>
@@ -46,6 +46,20 @@ public class Genes : MonoBehaviour
 			new Attribute() { name = "Mating Threshold", value = 1 },
 			new Attribute() { name = "Gestation Time", value = 1 }
 			};
+	}
+
+	public void RandomInit()
+	{
+		if (rand.Next(1, 101) > 50)
+		{
+			this.gender = Gender.MALE;
+		}
+		else
+		{
+			this.gender = Gender.FEMALE;
+		}
+
+		InitAttributeArray();
 	}
 
 	public void InheritedGenes(Genes mother, Genes father)

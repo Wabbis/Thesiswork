@@ -19,13 +19,15 @@ public class Rabbit_TaskMoveToFood : Node
 
 		if (target == null) 
 		{
+			ClearData("Food");
 			state = NodeState.FAILURE;
 			return state;
 		}
 
+		
 		ai.destination = target.position;
 		
-        if (ai.reachedDestination)
+        if (ai.remainingDistance < 2)
         {
 			state = NodeState.SUCCESS;
 			return state;

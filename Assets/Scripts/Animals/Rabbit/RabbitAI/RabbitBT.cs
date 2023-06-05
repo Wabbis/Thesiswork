@@ -10,6 +10,7 @@ public class RabbitBT : BehaviourTree.BehaviourTree
 	public Rabbit rabbit;
 	public AIPath ai;
 	public Node activeNode = null;
+	public Node root; 
 
     public void Awake()
     {
@@ -18,7 +19,7 @@ public class RabbitBT : BehaviourTree.BehaviourTree
     }
     protected override Node SetupTree()
     {
-		Node root = new Selector(new List<Node>
+		root = new Selector(new List<Node>
 		{
 			new Sequence(new List<Node>
 			{

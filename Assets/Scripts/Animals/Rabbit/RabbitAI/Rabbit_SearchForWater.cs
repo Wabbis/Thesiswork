@@ -32,7 +32,7 @@ public class Rabbit_SearchForWater : Node
 			Collider[] collider = Physics.OverlapSphere(_transform.position,
 				rabbit.visionRange,
 				_waterLayerMask);
-			if(collider.Length == 0 && rabbit.thirst > 0.8f)
+			if(collider.Length == 0 && rabbit.thirst > 75.0f)
 			{
 				if(memory.Count == 0)
 				{
@@ -50,7 +50,7 @@ public class Rabbit_SearchForWater : Node
 					}
 				}
 
-				Debug.Log("water found from memory");
+				
 				parent.parent.SetData("Water", closest);
 				state = NodeState.SUCCESS;
 				return state;
@@ -59,7 +59,7 @@ public class Rabbit_SearchForWater : Node
 
 			if(collider.Length > 0)
 			{
-				Debug.Log("Water found");
+				
 				Transform closest = null;
 				float closestDistance = float.MaxValue;
 				foreach(Collider col in collider)

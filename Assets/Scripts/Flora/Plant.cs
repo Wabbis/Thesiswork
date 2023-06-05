@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Plant : MonoBehaviour
 {
@@ -19,12 +20,12 @@ public class Plant : MonoBehaviour
     private float reproductionTimer = 0f;
 	private float age = 0;
 
+	public List<Transform> targetedBy;
 
     void Update()
     {
         reproductionTimer += Time.deltaTime;
 		age += Time.deltaTime;
-        slider.value = reproductionTimer / reproductionRate;
         if(reproductionTimer > reproductionRate)
         {
             if (!DisableSpawning)
@@ -32,7 +33,7 @@ public class Plant : MonoBehaviour
                 for (int i = 0; i < reprodcutionAmount; i++)
                 {
                     GameObject plant = Instantiate(prefab);
-                    plant.transform.position = Utility.FindRandomPointOnNavMesh(transform, reproductionRange);
+                    plant.transform.position = Utility.FindPointAroundTransform(transform, reproductionRange);
                     plant.transform.name = "Plant";
                 }
             }
@@ -41,10 +42,22 @@ public class Plant : MonoBehaviour
 
 		if(age >= timeToDie)
 		{
-			Destroy(this);
+			Destroy(this.gameObject);
 		}
 
     }
 
+	//private void OnDestroy()
+	//{
+	//	foreach(Transform animal in targetedBy)
+	//	{
+	//		animal.GetComponent<RabbitBT>().activeNode.ClearData("Food");
+	//	}
+	//}
+
+	public void AddTarget(Transform transform)
+	{
+		targetedBy.Add(transform);
+	}
 
 }

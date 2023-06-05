@@ -28,7 +28,7 @@ public class Rabbit_TaskMate : Node
 		_transform.Rotate(Vector3.up, 10);
 		if (timeCounter > 3f)
 		{
-			Debug.Log("Mating ended");
+			
 			if (rabbit.genes.gender == Genes.Gender.FEMALE) { rabbit.GetPregnant(rabbit.Mate); }
 			rabbit.action = Animal.Action.NONE;
 			timeCounter = 0f;

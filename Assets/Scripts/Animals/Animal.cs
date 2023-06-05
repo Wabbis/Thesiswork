@@ -33,7 +33,8 @@ public class Animal : MonoBehaviour
 	// Reproduction Settings	
 	[Header("Reproduction")]
 	public float timeToMate;
-	public float reproductiveUrge;  
+	public float reproductiveUrge;
+	public float urgeMultiplier = 1;
 	// Female only
 	public bool isPregnant = false;
 	public float gestationTime = 10f;
@@ -43,6 +44,7 @@ public class Animal : MonoBehaviour
 	// General settings:
 	[Header("General")]
 	public float age = 0;
+	public float ageingSpeed = 0.5f;
 	public float maxEnergy; // affected by size?
 	public float energy; 
 	public float mass; // is affected by genes
@@ -83,7 +85,7 @@ public class Animal : MonoBehaviour
     {
 		walkSpeed = ai.velocity.magnitude;
 		
-		reproductiveUrge += Time.deltaTime;
+		reproductiveUrge += Time.deltaTime * urgeMultiplier;
 		if(reproductiveUrge > 100)
 		{
 			reproductiveUrge = 100;
@@ -94,8 +96,8 @@ public class Animal : MonoBehaviour
 		energy -= Mathf.Pow(size, 0.75f) * Time.deltaTime;
 
 		//energy -= mass;
-		age += Time.deltaTime;
-		hunger += Time.deltaTime * 1f;
+		age += Time.deltaTime * ageingSpeed;
+		hunger += Time.deltaTime * 2f;
 		thirst += Time.deltaTime * 1f;
 		
 		
@@ -104,7 +106,7 @@ public class Animal : MonoBehaviour
 		if (energy <= 0) Die(CauseOfDeath.EXHAUSTION);
 		if (hunger >= 100) Die(CauseOfDeath.STARVING);
 		if (thirst >= 100) Die(CauseOfDeath.THIRST);
-		if (age > 120f) Die(CauseOfDeath.AGE);
+		if(Random.Range(0,100) < oddToDieByAge.Evaluate(age)) Die(CauseOfDeath.AGE);
 	}
 
 	protected void Die(CauseOfDeath cod)

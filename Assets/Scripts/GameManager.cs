@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
 		_instance = this;
 	}
 
+	public bool createInitialPopulation = false;
+	public float initialPopulationAmount = 0f;
+
+
 	[SerializeField]
 	private List<Rabbit> rabbits = new List<Rabbit>();
 	[SerializeField]
@@ -55,8 +59,21 @@ public class GameManager : MonoBehaviour
 		if (listOfRabbitDeaths == null) listOfRabbitDeaths = new Dictionary<CauseOfDeath, int>();
 		if (listOfFoxDeaths == null) listOfFoxDeaths = new Dictionary<CauseOfDeath, int>();
 
-		
-		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Fox")) {
+		if (createInitialPopulation)
+		{
+			GameObject animal = Resources.Load("Animals/Rabbit") as GameObject;
+			for (int i = 0; i < initialPopulationAmount; i++)
+			{
+				GameObject go = Instantiate(animal, Vector3.zero, Quaternion.identity);
+				do {
+					go.transform.position = new Vector3(Random.Range(0, 370), 0, Random.Range(0, 370)); 
+				} while(!Physics.Raycast(go.transform.position, Vector3.down, 2, LayerMask.GetMask("Grass")));
+
+				go.GetComponent<Genes>().RandomInit();
+			}
+		}
+
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Fox")) {
 			AddFox(obj.GetComponent<Fox>());
 			obj.GetComponent<Fox>().InitGenes();
 		}
@@ -69,6 +86,13 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	private void OnDestroy()
+	{
+		foreach(KeyValuePair<CauseOfDeath, int> kvp in listOfRabbitDeaths)
+		{
+			Debug.LogFormat("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+		}
+	}
 	/* Add animals */
 	public void AddRabbit(Rabbit rabbit)
 	{
