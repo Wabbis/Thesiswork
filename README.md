@@ -1,2 +1,5 @@
-# Insinöörityö - Aku Telimaa
- Insinöörityö - Ekosysteemin simulaatio
+## Aku Telimaa - Thesis Work
+
+Exploring Natural selection in game environment.
+
+
